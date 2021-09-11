@@ -5,26 +5,27 @@ import "./Login.css";
 import { useUsers } from "../../hooks/use-users";
 
 export default function Login() {
+  // history
   let history = useHistory();
-  const { users, loggedInUser, setLoggedInUser } = useUsers();
-
+  // hooks
+  const { users, setLoggedInUser } = useUsers();
+  // 1) states - input
   const [emaill, setEmaill] = useState("");
   const [passwordd, setPasswordd] = useState("");
-
+  // 2) states
   const [warningUserDoesntExist, setWarningUserDoesntExist] = useState(false);
   const [warningPassword, setWarningPassword] = useState(false);
-
+  
+  // FUNCTIONS
+  // inputs function - handler
   const updateEmaill = (e) => {
     setEmaill(e.target.value);
   };
-
   const updatePasswordd = (e) => {
     setPasswordd(e.target.value);
   };
-
-  const checkLogin = (e) => {
-    e.preventDefault();
-
+  // helper function 
+  const loginStatus = () => {
     const correctMailPass = users.find(
       (user) => user.email === emaill && user.password === passwordd
     );
@@ -33,28 +34,25 @@ export default function Login() {
     );
 
     if (correctMailWrongPass) {
-      console.log("Correct email, wrong password");
       setWarningPassword(true);
       setWarningUserDoesntExist(false);
       setPasswordd("");
-    }
-    if (!correctMailPass && !correctMailWrongPass) {
-      console.log("User doesnt exists. Go to register.");
+    } else if (!correctMailPass && !correctMailWrongPass) {
       setWarningUserDoesntExist(true);
       setWarningPassword(false);
       setEmaill("");
       setPasswordd("");
-    }
-
-    // correct
-    if (correctMailPass) {
-      console.log("Welcome back " + correctMailPass.email);
+    } else {
       setLoggedInUser(correctMailPass);
-      console.log(correctMailPass);
       setEmaill("");
       setPasswordd("");
       history.push("/home");
     }
+  };
+  // main function - submit
+  const checkLogin = (e) => {
+    e.preventDefault();
+    loginStatus();
   };
 
   return (

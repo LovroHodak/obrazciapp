@@ -1,72 +1,72 @@
 import React, { useState } from "react";
-import "./Register.css";
-import { useUsers } from "../../hooks/use-users";
 import { useHistory } from "react-router-dom";
 
+import "./Register.css";
+import { useUsers } from "../../hooks/use-users";
+
 export default function Register() {
+  // history
   let history = useHistory();
-
-  const { users, setUsers } = useUsers();
-
+  // hooks
+  const { users, addNewUser } = useUsers();
+  // 1) states - input
   const [usernamee, setUsernamee] = useState("");
   const [emaill, setEmaill] = useState("");
   const [passwordd, setPasswordd] = useState("");
-
+  // 2) states
   const [warningEmail, setWarningEmail] = useState(false);
   const [warningUsername, setWarningUsername] = useState(false);
 
+  // FUNCTIONS
+  // inputs function - handler
   const updateUsernamee = (e) => {
     setUsernamee(e.target.value);
   };
-
   const updateEmaill = (e) => {
     setEmaill(e.target.value);
   };
-
   const updatePasswordd = (e) => {
     setPasswordd(e.target.value);
   };
-
+  // on spot - new obj
   const newUser = {
     id: users.length + 1,
     username: usernamee,
     email: emaill,
     password: passwordd,
   };
-
-  const addUser = (e) => {
-    e.preventDefault();
-
+  // helper function
+  const registerStatus = () => {
     const emailAlreadyExists = users.find((user) => user.email === emaill);
     const usernameAlreadyExists = users.find(
       (user) => user.username === usernamee
     );
 
     if (emailAlreadyExists) {
-      console.log("Email already exists!");
       setWarningEmail(true);
       setWarningUsername(false);
       setEmaill("");
-    }
-    if (usernameAlreadyExists) {
-      console.log("Username already exists!");
+    } else if (usernameAlreadyExists) {
       setWarningEmail(false);
       setWarningUsername(true);
       setUsernamee("");
-    }
-    if (emailAlreadyExists && usernameAlreadyExists) {
+    } else if (emailAlreadyExists && usernameAlreadyExists) {
       setWarningEmail(true);
       setWarningUsername(true);
       setEmaill("");
       setUsernamee("");
     } else {
-      // correct
-      setUsers([...users].concat(newUser));
+      addNewUser(newUser);
       setUsernamee("");
       setEmaill("");
       setPasswordd("");
       history.push("/");
     }
+  };
+  // main function - submit
+  const addUser = (e) => {
+    e.preventDefault();
+    registerStatus();
   };
 
   return (

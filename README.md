@@ -16,6 +16,7 @@ Isto za Username uporabljam 'controlId="formBasicEmail"'. Kje najdem vse mogoce 
 
 TODO:
 
-1. Put all setters and functions in use-users / separation of concerns
-2. 
+1. DONE - Register.js - ce username, ali email ze obstajata
+2. DONE - Put all setters and functions in use-users / separation of concerns
 3. 
+4. 
