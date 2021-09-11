@@ -1,0 +1,13 @@
+.register {
+    border: 2px solid pink;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registerForm {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
