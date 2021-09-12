@@ -1,16 +1,15 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { useUsers } from "../../hooks/use-users";
 
 export default function AddExams() {
-  
   // hooks
-  const { users, setUsers, loggedInUser, setLoggedInUser } = useUsers();
+  const { users, loggedInUser, extandUserInfoInUsers } = useUsers();
   // state - input
   const [examName, setExamName] = useState("");
   const [examGrade, setExamGrade] = useState("");
 
-  console.log(loggedInUser);
-  console.log(users);
   // FUNCTIONS
   // inputs function - handler
   const updateExamName = (e) => {
@@ -19,22 +18,34 @@ export default function AddExams() {
   const updateExamGrade = (e) => {
     setExamGrade(e.target.value);
   };
+  // helper functions
+  const updatedUsers = users.map((user) => {
+    if (user.id === loggedInUser.id) {
+      return loggedInUser;
+    }
+    return user;
+  });
 
   // main function - submit
   const addNewExam = (e) => {
     e.preventDefault();
-
-    loggedInUser.actions.push({what: 'nada', when: 'now'})
-    loggedInUser.exams.push({name: examName, grade: examGrade})
-
-    
-
+    // push properties
+    loggedInUser.actions.push({
+      what: "added new exams",
+      when: new Date().toString().slice(0, 24),
+    });
+    loggedInUser.exams.push({ name: examName, grade: examGrade });
+    extandUserInfoInUsers(updatedUsers);
     setExamName("");
     setExamGrade("");
+
+    console.log(loggedInUser);
+    console.log(updatedUsers[loggedInUser.id - 1]);
   };
   return (
     <div>
       <h1>AddExams</h1>
+      <Link to='/home'><button>Back Home</button></Link>
       <form onSubmit={addNewExam}>
         <label>Exam name:</label>
         <input

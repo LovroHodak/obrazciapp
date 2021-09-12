@@ -18,7 +18,7 @@ export function UsersProvider(props) {
   };
 
   const extandUserInfoInUsers = (users) => {
-    setUsers()
+    setUsers(users);
   }
 
   // loggedInUser

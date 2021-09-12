@@ -61,8 +61,10 @@ export default function AddPersonalInfo() {
     },
     birthDay: birthDayy,
     gender: genderr,
-    actions: [{ what: "added personal info", when: "2.1.2008" }],
-    exams: []
+    actions: [
+      { what: "added personal info", when: new Date().toString().slice(0, 24) },
+    ],
+    exams: [],
   };
 
   const updatedUsers = users.map((user) => {
@@ -86,8 +88,8 @@ export default function AddPersonalInfo() {
     setBirthDayy("");
     setGenderr("");
 
-    console.log(users[loggedInUser.id - 1]);
-    console.log(loggedInUser);
+    console.log(updatedUsers[loggedInUser.id - 1]);
+    console.log(updatedUser);
 
     history.push("/home");
   };

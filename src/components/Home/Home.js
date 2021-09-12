@@ -12,8 +12,6 @@ export default function Home() {
     logMeOut();
   };
 
-  console.log(loggedInUser)
-
   return (
     <div className="home">
       {loggedInUser.actions ? (
