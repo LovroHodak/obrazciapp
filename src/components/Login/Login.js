@@ -99,7 +99,7 @@ export default function Login() {
           return (
             <div key={user.id}>
               <p>{user.id}</p>
-              <p>{user.username}</p>
+              <p>{user.name}</p>
               <p>{user.email}</p>
               <p>{user.password}</p>
             </div>

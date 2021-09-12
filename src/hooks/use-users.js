@@ -12,13 +12,23 @@ export function UsersProvider(props) {
   const [users, setUsers] = useState(allUsers);
   const [loggedInUser, setLoggedInUser] = useState(null);
   // functions
+  // users
   const addNewUser = (user) => {
     setUsers([...users, user]);
   };
 
+  const extandUserInfoInUsers = (users) => {
+    setUsers()
+  }
+
+  // loggedInUser
   const logMeOut = () => {
     setLoggedInUser(null);
     history.push("/");
+  };
+
+  const extandUserInfoInLoggedInUser = (user) => {
+    setLoggedInUser(user);
   };
 
   return (
@@ -30,6 +40,8 @@ export function UsersProvider(props) {
         setLoggedInUser,
         addNewUser,
         logMeOut,
+        extandUserInfoInUsers,
+        extandUserInfoInLoggedInUser,
       }}
     >
       {props.children}

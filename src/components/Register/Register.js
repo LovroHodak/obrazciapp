@@ -10,17 +10,17 @@ export default function Register() {
   // hooks
   const { users, addNewUser } = useUsers();
   // 1) states - input
-  const [usernamee, setUsernamee] = useState("");
+  const [namee, setNamee] = useState("");
   const [emaill, setEmaill] = useState("");
   const [passwordd, setPasswordd] = useState("");
   // 2) states
   const [warningEmail, setWarningEmail] = useState(false);
-  const [warningUsername, setWarningUsername] = useState(false);
+  const [warningName, setWarningName] = useState(false);
 
   // FUNCTIONS
   // inputs function - handler
-  const updateUsernamee = (e) => {
-    setUsernamee(e.target.value);
+  const updateNamee = (e) => {
+    setNamee(e.target.value);
   };
   const updateEmaill = (e) => {
     setEmaill(e.target.value);
@@ -31,33 +31,33 @@ export default function Register() {
   // on spot - new obj
   const newUser = {
     id: users.length + 1,
-    username: usernamee,
+    name: namee,
     email: emaill,
     password: passwordd,
   };
   // helper function
   const registerStatus = () => {
     const emailAlreadyExists = users.find((user) => user.email === emaill);
-    const usernameAlreadyExists = users.find(
-      (user) => user.username === usernamee
+    const nameAlreadyExists = users.find(
+      (user) => user.name === namee
     );
 
     if (emailAlreadyExists) {
       setWarningEmail(true);
-      setWarningUsername(false);
+      setWarningName(false);
       setEmaill("");
-    } else if (usernameAlreadyExists) {
+    } else if (nameAlreadyExists) {
       setWarningEmail(false);
-      setWarningUsername(true);
-      setUsernamee("");
-    } else if (emailAlreadyExists && usernameAlreadyExists) {
+      setWarningName(true);
+      setNamee("");
+    } else if (emailAlreadyExists && nameAlreadyExists) {
       setWarningEmail(true);
-      setWarningUsername(true);
+      setWarningName(true);
       setEmaill("");
-      setUsernamee("");
+      setNamee("");
     } else {
       addNewUser(newUser);
-      setUsernamee("");
+      setNamee("");
       setEmaill("");
       setPasswordd("");
       history.push("/");
@@ -73,13 +73,13 @@ export default function Register() {
     <div className="register">
       <h1>Register</h1>
       <form onSubmit={addUser} className="registerForm">
-        <label>Username:</label>
+        <label>Name:</label>
         <input
-          onChange={updateUsernamee}
+          onChange={updateNamee}
           type="text"
-          name="usernamee"
-          value={usernamee}
-          placeholder="Enter username"
+          name="namee"
+          value={namee}
+          placeholder="Enter name"
           required
         />
         <label>Email:</label>
@@ -106,8 +106,8 @@ export default function Register() {
         ) : (
           <></>
         )}
-        {warningUsername ? (
-          <h4 style={{ color: "red" }}>Username already exist!</h4>
+        {warningName ? (
+          <h4 style={{ color: "red" }}>Name already exist!</h4>
         ) : (
           <></>
         )}
@@ -117,7 +117,7 @@ export default function Register() {
           return (
             <div key={user.id}>
               <p>{user.id}</p>
-              <p>{user.username}</p>
+              <p>{user.name}</p>
               <p>{user.email}</p>
               <p>{user.password}</p>
             </div>
