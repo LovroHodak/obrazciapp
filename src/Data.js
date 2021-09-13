@@ -16,8 +16,8 @@ export const allUsers = [
     email: "ana@gmail.com",
     password: "love88",
     actions: [
-      { what: "added personal info", when: "2.1.2008" },
-      { what: "added new exam", when: "2.2.2010" },
+      { id: 11, what: "added personal info", when: "2.1.2008" },
+      { id: 12, what: "added new exam", when: "2.2.2010" },
     ],
   },
   {
@@ -37,8 +37,8 @@ export const allUsers = [
     email: "miha@gmail.com",
     password: "morelove99",
     actions: [
-      { what: "added personal info", when: "2.1.2008" },
-      { what: "added new exam", when: "2.2.2010" },
+      { id: 13, what: "added personal info", when: "2.1.2008" },
+      { id: 14, what: "added new exam", when: "2.2.2010" },
     ],
   },
 ];

@@ -11,6 +11,7 @@ export function UsersProvider(props) {
   // states
   const [users, setUsers] = useState(allUsers);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [personalInfoData, setPersonalInfoData] = useState(null)
   // functions
   // users
   const addNewUser = (user) => {
@@ -31,6 +32,12 @@ export function UsersProvider(props) {
     setLoggedInUser(user);
   };
 
+  // states by pages 
+  // 1) personal info
+  const onlyPersonalInfo = (personalInfo) => {
+    setPersonalInfoData(personalInfo)
+  }
+
   return (
     <UsersContext.Provider
       value={{
@@ -42,6 +49,8 @@ export function UsersProvider(props) {
         logMeOut,
         extandUserInfoInUsers,
         extandUserInfoInLoggedInUser,
+        personalInfoData,
+        onlyPersonalInfo,
       }}
     >
       {props.children}

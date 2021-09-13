@@ -18,17 +18,30 @@ export default function Home() {
         <div>
           <h1>Welcome back {loggedInUser.name}! </h1>
           <button>Edit data</button>
-          <Link to='/addExams'><button>Add exams</button></Link>
+          <Link to="/seeAllChanges">
+            <button>See all changes in one place</button>
+          </Link>
+          <Link to="/addExams">
+            <button>Add exams</button>
+          </Link>
           <div>
             {loggedInUser.actions
               .map((action, i) => {
                 return (
                   <div key={i}>
-                    <Link to="/detail">
-                      <h5>
-                        {i + 1}. {action.what}, {action.when}
-                      </h5>
-                    </Link>
+                    {action.what === "added personal info" ? (
+                      <Link to="/onlyPersonalInfo">
+                        <h5>
+                          {i + 1}. {action.what}, {action.when}
+                        </h5>
+                      </Link>
+                    ) : (
+                      <Link to={`/feedChangesDetail/${action.id}`}>
+                        <h5>
+                          {i + 1}. {action.what}, {action.when}
+                        </h5>
+                      </Link>
+                    )}
                   </div>
                 );
               })

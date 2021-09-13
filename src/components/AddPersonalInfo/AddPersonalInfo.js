@@ -10,6 +10,7 @@ export default function AddPersonalInfo() {
   const {
     users,
     loggedInUser,
+    onlyPersonalInfo,
     extandUserInfoInUsers,
     extandUserInfoInLoggedInUser,
   } = useUsers();
@@ -48,7 +49,27 @@ export default function AddPersonalInfo() {
   const updateGenderr = (e) => {
     setGenderr(e.target.value);
   };
-  // helper function
+  // helper function (for state - personalInfoData)
+  const additionalUserData = {
+    surname: surnamee,
+    address: {
+      street: streett,
+      number: numberr,
+      postNr: postNrr,
+      city: cityy,
+      country: countryy,
+    },
+    birthDay: birthDayy,
+    gender: genderr,
+    actions: [
+      {
+        id: new Date().getTime(),
+        what: "added personal info",
+        when: new Date().toString().slice(0, 24),
+      },
+    ],
+  };
+  // (for state - loggedInUser)
   const updatedUser = {
     ...loggedInUser,
     surname: surnamee,
@@ -62,11 +83,15 @@ export default function AddPersonalInfo() {
     birthDay: birthDayy,
     gender: genderr,
     actions: [
-      { what: "added personal info", when: new Date().toString().slice(0, 24) },
+      {
+        id: new Date().getTime(),
+        what: "added personal info",
+        when: new Date().toString().slice(0, 24),
+      },
     ],
     exams: [],
   };
-
+  // (for state - users)
   const updatedUsers = users.map((user) => {
     if (user.id === loggedInUser.id) {
       return updatedUser;
@@ -76,8 +101,10 @@ export default function AddPersonalInfo() {
   // main function - submit
   const addMyPersonalInfo = (e) => {
     e.preventDefault();
+
     extandUserInfoInUsers(updatedUsers);
     extandUserInfoInLoggedInUser(updatedUser);
+    onlyPersonalInfo(additionalUserData);
 
     setSurnamee("");
     setStreett("");
@@ -97,10 +124,11 @@ export default function AddPersonalInfo() {
   return (
     <div>
       <div>
-        <p>{loggedInUser.id}</p>
-        <p>{loggedInUser.name}</p>
-        <p>{loggedInUser.email}</p>
-        <p>{loggedInUser.password}</p>
+        <h2>Data added at Register</h2>
+        <p>ID: {loggedInUser.id}</p>
+        <p>NAME: {loggedInUser.name}</p>
+        <p>EMAIL: {loggedInUser.email}</p>
+        <p>PASSWORD: {loggedInUser.password}</p>
       </div>
       <h2>AddPersonalInfo</h2>
       <form

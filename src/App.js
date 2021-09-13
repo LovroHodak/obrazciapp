@@ -6,9 +6,11 @@ import Login from "./components/Login/Login";
 import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
-import Detail from "./components/Detail/Detail";
 import AddPersonalInfo from "./components/AddPersonalInfo/AddPersonalInfo";
 import AddExams from "./components/AddExams/AddExams";
+import OnlyPersonalInfo from "./components/OnlyPersonalInfo/OnlyPersonalInfo";
+import FeedChangesDetail from "./components/FeedChangesDetail.js/FeedChangesDetail";
+import SeeAllChanges from "./components/SeeAllChanges/SeeAllChanges";
 
 function App() {
   return (
@@ -40,13 +42,6 @@ function App() {
             />
             <Route
               exact
-              path="/detail"
-              render={() => {
-                return <Detail />;
-              }}
-            />
-            <Route
-              exact
               path="/addPersonalInfo"
               render={() => {
                 return <AddPersonalInfo />;
@@ -54,9 +49,30 @@ function App() {
             />
             <Route
               exact
+              path="/onlyPersonalInfo"
+              render={() => {
+                return <OnlyPersonalInfo />;
+              }}
+            />
+            <Route
+              exact
+              path="/feedChangesDetail/:id"
+              render={(routeProps) => {
+                return <FeedChangesDetail {...routeProps} />;
+              }}
+            />
+            <Route
+              exact
               path="/addExams"
               render={() => {
                 return <AddExams />;
+              }}
+            />
+            <Route
+              exact
+              path="/seeAllChanges"
+              render={() => {
+                return <SeeAllChanges />;
               }}
             />
           </React.Fragment>

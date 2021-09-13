@@ -31,8 +31,11 @@ export default function AddExams() {
     e.preventDefault();
     // push properties
     loggedInUser.actions.push({
-      what: "added new exams",
+      id: new Date().getTime(),
+      what: "added new exam",
       when: new Date().toString().slice(0, 24),
+      name: examName,
+      grade: examGrade
     });
     loggedInUser.exams.push({ name: examName, grade: examGrade });
     extandUserInfoInUsers(updatedUsers);
@@ -69,7 +72,6 @@ export default function AddExams() {
       </form>
 
       <div>
-        <h1>Detail.js</h1>
         <p>{loggedInUser.id}</p>
         <p>{loggedInUser.name}</p>
         <p>{loggedInUser.surname}</p>
@@ -104,6 +106,7 @@ export default function AddExams() {
           {loggedInUser.actions.map((action, i) => {
             return (
               <div key={i} style={{ border: "1px solid pink" }}>
+                <p>{action.id}</p>
                 <p>{action.what}</p>
                 <p>{action.when}</p>
               </div>

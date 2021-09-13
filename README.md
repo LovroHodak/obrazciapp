@@ -27,6 +27,10 @@ TODO:
    b) separation of concerns
    c) update users
 
+4. Edit data 
+
+4. v Actions in Exams imam poduplirano dato (exam name, exam grade)
+
 4. STYLE bootstrap ALLES
 
 4. Home.js -> vsi linki na Detail.js kazejo isto, ne pokazejo kaj sem takrat spremenil
