@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useUsers } from "../../hooks/use-users";
 
 export default function OnlyPersonalInfo() {
   // hooks
-  const { personalInfoData, loggedInUser } = useUsers();
-  console.log(personalInfoData);
+  const { personalInfoData, loggedInUser, users, extandUserInfoInUsers } =
+    useUsers();
+// state - input
+  const [surnameEditing, setSurnameEditing] = useState(null);
+  const [surnameEditingText, setSurnameEditingText] = useState("");
+// helper function
+  const updatedUsers = users.map((user) => {
+    if (user.id === loggedInUser.id) {
+      return loggedInUser;
+    }
+    return user;
+  });
+// edit SURNAME function
+  function editSurname() {
+    personalInfoData.surname = surnameEditingText;
+    loggedInUser.surname = surnameEditingText;
+    extandUserInfoInUsers(updatedUsers);
+    setSurnameEditing(null);
+    setSurnameEditingText("");
+
+    console.log("pers", personalInfoData);
+    console.log("logg", loggedInUser);
+    console.log("users", users);
+  }
 
   return (
     <div>
@@ -20,7 +42,27 @@ export default function OnlyPersonalInfo() {
       <p>EMAIL: {loggedInUser.email}</p>
       <p>PASSWORD: {loggedInUser.password}</p>
       <h2>Data added at AddPersonalInfo</h2>
-      <p>{personalInfoData.surname}</p>
+
+      {surnameEditing ? (
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setSurnameEditingText(e.target.value)}
+            value={surnameEditingText}
+          />
+          <button onClick={() => editSurname(personalInfoData.surname)}>
+            Submit Edits
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p>{personalInfoData.surname}</p>
+          <button onClick={() => setSurnameEditing(personalInfoData.surname)}>
+            Edit Surname
+          </button>
+        </div>
+      )}
+
       <div style={{ border: "1px solid green" }}>
         <p>{personalInfoData.address.street}</p>
         <p>{personalInfoData.address.number}</p>
