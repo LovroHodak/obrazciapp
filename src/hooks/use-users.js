@@ -1,3 +1,4 @@
+import userEvent from "@testing-library/user-event";
 import React, { useState, createContext, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -7,7 +8,8 @@ const UsersContext = createContext();
 
 function getFromLocalStorage() {
   const value = localStorage.getItem("loggedInUserr");
-  if (value) {
+  const secondValue = localStorage.getItem("personalInfoOnceee");
+  if (value && secondValue) {
     return JSON.parse(value);
   }
   return null;
@@ -20,14 +22,18 @@ export function UsersProvider(props) {
   const [users, setUsers] = useState(allUsers);
   const [loggedInUser, setLoggedInUser] = useState(getFromLocalStorage);
 
+  const [personalInfoOnce, setPersonalInfoOnce] = useState(getFromLocalStorage)
+
   React.useEffect(() => {
     localStorage.setItem("loggedInUserr", JSON.stringify(loggedInUser));
-  }, [loggedInUser]);
+    localStorage.setItem("personalInfoOnceee", JSON.stringify(personalInfoOnce));
+  }, [loggedInUser, personalInfoOnce]);
 
   // functions with setters for states
   // users
   const addNewUser = (user) => {
     setUsers([...users, user]);
+    setPersonalInfoOnce(user)
     console.log(users);
   };
 
@@ -58,6 +64,11 @@ export function UsersProvider(props) {
     console.log(users)
   };
 
+
+  const updatePersonalInfoOnce = (user) => {
+    setPersonalInfoOnce(user)
+  }
+
   
 
 
@@ -71,7 +82,10 @@ export function UsersProvider(props) {
         loggedInUser,
         addLoggedInUser,
         updateLoggedInUser,
-        logMeOut
+        logMeOut,
+
+        personalInfoOnce,
+        updatePersonalInfoOnce
       }}
     >
       {props.children}

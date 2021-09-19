@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Form, Button, Card, ListGroup } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
 
@@ -7,7 +8,7 @@ export default function OnlyPersonalInfo() {
   // hooks
   const { loggedInUser, users, updateAllUsers } = useUsers();
   // state - input
-  const [surnameEditing, setSurnameEditing] = useState(null);
+  const [surnameEditing, setSurnameEditing] = useState(false);
   const [surnameEditingText, setSurnameEditingText] = useState(
     loggedInUser.surname
   );
@@ -20,10 +21,31 @@ export default function OnlyPersonalInfo() {
     console.log(imutableData);
   }, []);
 
-  console.log(fixed);
+  console.log("FIXED DATA", fixed);
 
-  const [nameEditing, setNameEditing] = useState(null);
+  const [nameEditing, setNameEditing] = useState(false);
   const [nameEditingText, setNameEditingText] = useState(loggedInUser.name);
+
+  const [addressObjEditing, setAddressEditing] = useState(false);
+  const [addressEditingData, setAddressEditingData] = useState({
+    city: loggedInUser.address.city,
+    country: loggedInUser.address.country,
+    number: loggedInUser.address.number,
+    postNr: loggedInUser.address.postNr,
+    street: loggedInUser.address.street,
+  });
+
+  const [mailPassEditing, setMailPassEditing] = useState(false);
+  const [mailPassEditingData, setMailPassEditingData] = useState({
+    email: loggedInUser.email,
+    password: loggedInUser.password,
+  });
+
+  const [birthGenderEditing, setBirthGenderEditing] = useState(false);
+  const [birthGenderEditingData, setBirthGenderEditingData] = useState({
+    birthDay: loggedInUser.birthDay,
+    gender: loggedInUser.gender,
+  });
 
   let newAction = {
     id: new Date().getTime(),
@@ -34,19 +56,87 @@ export default function OnlyPersonalInfo() {
   };
 
   // helper function
+  function editBirthGender(){
+    loggedInUser.birthDay = birthGenderEditingData.birthDay;
+    loggedInUser.gender = birthGenderEditingData.gender;
+
+    loggedInUser.actions.push({
+      ...newAction,
+      what: "Edited birth & gender info",
+      oldData: "Old birth day & gender",
+      change: "New birth day& gender",
+    });
+
+    setBirthGenderEditing(false);
+    setBirthGenderEditingData({
+      birthDay: loggedInUser.birthDay,
+      gender: loggedInUser.gender,
+    });
+
+    console.log("logg", loggedInUser);
+    console.log("users", users);
+  }
+
+  function editMailPass() {
+    loggedInUser.email = mailPassEditingData.email;
+    loggedInUser.password = mailPassEditingData.password;
+
+    loggedInUser.actions.push({
+      ...newAction,
+      what: "Edited register info",
+      oldData: "Old email and password",
+      change: "New email and password",
+    });
+
+    setMailPassEditing(false);
+    setMailPassEditingData({
+      email: loggedInUser.email,
+      password: loggedInUser.password,
+    });
+
+    console.log("logg", loggedInUser);
+    console.log("users", users);
+  }
+
+  function editAddressObj() {
+    loggedInUser.address.city = addressEditingData.city;
+    loggedInUser.address.country = addressEditingData.country;
+    loggedInUser.address.number = addressEditingData.number;
+    loggedInUser.address.postNr = addressEditingData.postNr;
+    loggedInUser.address.street = addressEditingData.street;
+
+    loggedInUser.actions.push({
+      ...newAction,
+      what: "Edited ADDRESS",
+      oldData: "Old Address",
+      change: "New Address",
+    });
+
+    setAddressEditing(false);
+    setAddressEditingData({
+      city: loggedInUser.address.city,
+      country: loggedInUser.address.country,
+      number: loggedInUser.address.number,
+      postNr: loggedInUser.address.postNr,
+      street: loggedInUser.address.street,
+    });
+
+    console.log("logg", loggedInUser);
+    console.log("users", users);
+  }
   // edit SURNAME function
   function editSurname() {
     loggedInUser.surname = surnameEditingText;
 
     loggedInUser.actions.push({
       ...newAction,
-      what: "edited SURNAME",
+      what: "Edited SURNAME",
       oldData: fixed.surname,
       change: surnameEditingText,
     });
 
-    setSurnameEditing(null);
-    setSurnameEditingText("");
+    setSurnameEditing(false);
+    setSurnameEditingText(loggedInUser.surname);
 
     updateAllUsers(loggedInUser);
 
@@ -59,13 +149,13 @@ export default function OnlyPersonalInfo() {
 
     loggedInUser.actions.push({
       ...newAction,
-      what: "edited NAME",
+      what: "Edited NAME",
       oldData: fixed.name,
       change: nameEditingText,
     });
 
-    setNameEditing(null);
-    setNameEditingText("");
+    setNameEditing(false);
+    setNameEditingText(loggedInUser.name);
 
     updateAllUsers(loggedInUser);
 
@@ -75,66 +165,289 @@ export default function OnlyPersonalInfo() {
 
   return (
     <div>
-      <Link to="/home">
-        <button>Back Home</button>
-      </Link>
-      <h1>OnlyPersonalInfo.js - Only Personal Info</h1>
-      <h2>Data added at Register</h2>
-      <p>ID: {loggedInUser.id}</p>
+      <h1 style={{textAlign: 'center'}}>Personal Info</h1>
+      <Card>
+          <Card.Body className='d-flex '>
+            <Card.Title className='p-1'>ID: </Card.Title>
+            <Card.Text className='p-1'> {loggedInUser.id}</Card.Text>
+          </Card.Body>
+        </Card>
 
       {nameEditing ? (
-        <div>
-          <input
-            type="text"
-            onChange={(e) => setNameEditingText(e.target.value)}
-            value={nameEditingText}
-          />
-          <button onClick={() => editName(loggedInUser.name)}>
-            Submit Edit
-          </button>
-        </div>
+        <Card>
+          <Card.Body>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) => setNameEditingText(e.target.value)}
+                value={nameEditingText}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={() => editName()}
+              className="w-100"
+            >
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
       ) : (
-        <div>
-          <p>NAME: {loggedInUser.name}</p>
-          <button onClick={() => setNameEditing(loggedInUser.name)}>
-            Edit Name
-          </button>
-        </div>
+        <Card>
+          <Card.Body>
+            <Card.Title>Name:</Card.Title>
+            <Card.Text> {loggedInUser.name}</Card.Text>
+            <Button
+              variant="info"
+              onClick={() => setNameEditing(true)}
+              className="w-100"
+            >
+              Edit Name
+            </Button>
+          </Card.Body>
+        </Card>
       )}
-
-      <p>EMAIL: {loggedInUser.email}</p>
-      <p>PASSWORD: {loggedInUser.password}</p>
-      <h2>Data added at AddPersonalInfo</h2>
 
       {surnameEditing ? (
-        <div>
-          <input
-            type="text"
-            onChange={(e) => setSurnameEditingText(e.target.value)}
-            value={surnameEditingText}
-          />
-          <button onClick={() => editSurname(loggedInUser.surname)}>
-            Submit Edit
-          </button>
-        </div>
+        <Card>
+          <Card.Body>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) => setSurnameEditingText(e.target.value)}
+                value={surnameEditingText}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={() => editSurname()}
+              className="w-100"
+            >
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
       ) : (
-        <div>
-          <p>{loggedInUser.surname}</p>
-          <button onClick={() => setSurnameEditing(loggedInUser.surname)}>
-            Edit Surname
-          </button>
-        </div>
+        <Card>
+          <Card.Body>
+            <Card.Title>Surame:</Card.Title>
+            <Card.Text> {loggedInUser.surname}</Card.Text>
+            <Button
+              variant="info"
+              onClick={() => setSurnameEditing(true)}
+              className="w-100"
+            >
+              Edit Surname
+            </Button>
+          </Card.Body>
+        </Card>
       )}
 
-      <div style={{ border: "1px solid green" }}>
-        <p>{loggedInUser.address.street}</p>
-        <p>{loggedInUser.address.number}</p>
-        <p>{loggedInUser.address.postNr}</p>
-        <p>{loggedInUser.address.city}</p>
-        <p>{loggedInUser.address.country}</p>
-      </div>
-      <p>{loggedInUser.birthDay}</p>
-      <p>{loggedInUser.gender}</p>
+      {mailPassEditing ? (
+        <Card>
+          <Card.Body>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setMailPassEditingData({
+                    ...mailPassEditingData,
+                    email: e.target.value,
+                  })
+                }
+                value={mailPassEditingData.email}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setMailPassEditingData({
+                    ...mailPassEditingData,
+                    password: e.target.value,
+                  })
+                }
+                value={mailPassEditingData.password}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={() => editMailPass()}
+              className="w-100"
+            >
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Card>
+          <Card.Body>
+            <Card.Title>Email:</Card.Title>
+            <Card.Text> {loggedInUser.email}</Card.Text>
+            <Card.Title>Password:</Card.Title>
+            <Card.Text> {loggedInUser.password}</Card.Text>
+            <Button
+              variant="info"
+              onClick={() => setMailPassEditing(true)}
+              className="w-100"
+            >
+              Edit Email & Password
+            </Button>
+          </Card.Body>
+        </Card>
+      )}
+
+      {addressObjEditing ? (
+        <Card>
+          <Card.Body>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setAddressEditingData({
+                    ...addressEditingData,
+                    street: e.target.value,
+                  })
+                }
+                value={addressEditingData.street}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setAddressEditingData({
+                    ...addressEditingData,
+                    number: e.target.value,
+                  })
+                }
+                value={addressEditingData.number}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setAddressEditingData({
+                    ...addressEditingData,
+                    city: e.target.value,
+                  })
+                }
+                value={addressEditingData.city}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setAddressEditingData({
+                    ...addressEditingData,
+                    postNr: e.target.value,
+                  })
+                }
+                value={addressEditingData.postNr}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setAddressEditingData({
+                    ...addressEditingData,
+                    country: e.target.value,
+                  })
+                }
+                value={addressEditingData.country}
+              />
+            </Form.Group>
+
+            <Button
+              variant="primary"
+              onClick={() => editAddressObj()}
+              className="w-100"
+            >
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Card>
+          <Card.Body>
+            <Card.Title>Street:</Card.Title>
+            <Card.Text> {loggedInUser.address.street}</Card.Text>
+            <Card.Title>Number:</Card.Title>
+            <Card.Text> {loggedInUser.address.number}</Card.Text>
+            <Card.Title>City:</Card.Title>
+            <Card.Text> {loggedInUser.address.city}</Card.Text>
+            <Card.Title>Post number:</Card.Title>
+            <Card.Text> {loggedInUser.address.postNr}</Card.Text>
+            <Card.Title>Country:</Card.Title>
+            <Card.Text> {loggedInUser.address.country}</Card.Text>
+
+            <Button
+              variant="info"
+              onClick={() => setAddressEditing(true)}
+              className="w-100"
+            >
+              Edit Address
+            </Button>
+          </Card.Body>
+        </Card>
+      )}
+
+{birthGenderEditing ? (
+        <Card>
+          <Card.Body>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setBirthGenderEditingData({
+                    ...birthGenderEditingData,
+                    birthDay: e.target.value,
+                  })
+                }
+                value={birthGenderEditingData.birthDay}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setBirthGenderEditingData({
+                    ...birthGenderEditingData,
+                    gender: e.target.value,
+                  })
+                }
+                value={birthGenderEditingData.gender}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={() => editBirthGender()}
+              className="w-100"
+            >
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Card>
+          <Card.Body>
+            <Card.Title>Date of birth:</Card.Title>
+            <Card.Text> {loggedInUser.birthDay}</Card.Text>
+            <Card.Title>Gender:</Card.Title>
+            <Card.Text> {loggedInUser.gender}</Card.Text>
+            <Button
+              variant="info"
+              onClick={() => setBirthGenderEditing(true)}
+              className="w-100"
+            >
+              Edit Birth day & Gender
+            </Button>
+          </Card.Body>
+        </Card>
+      )}
       <div style={{ border: "1px solid grey" }}>
         {loggedInUser.actions.map((action, i) => {
           return (

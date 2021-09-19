@@ -11,7 +11,9 @@ export default function AddPersonalInfo() {
   const {
     loggedInUser,
     updateAllUsers,
-    updateLoggedInUser
+    updateLoggedInUser,
+    personalInfoOnce,
+        updatePersonalInfoOnce
   } = useUsers();
   // states - input
   const [surnamee, setSurnamee] = useState("");
@@ -65,7 +67,29 @@ export default function AddPersonalInfo() {
     actions: [
       {
         id: new Date().getTime(),
-        what: "added personal info",
+        what: "Added personal info",
+        when: new Date().toString().slice(0, 24),
+      },
+    ],
+    exams: [],
+  };
+
+  const updatedUserOnce = {
+    ...personalInfoOnce,
+    surname: surnamee,
+    address: {
+      street: streett,
+      number: numberr,
+      postNr: postNrr,
+      city: cityy,
+      country: countryy,
+    },
+    birthDay: birthDayy,
+    gender: genderr,
+    actions: [
+      {
+        id: new Date().getTime(),
+        what: "Added personal info",
         when: new Date().toString().slice(0, 24),
       },
     ],
@@ -79,6 +103,7 @@ export default function AddPersonalInfo() {
     updateAllUsers(loggedInUser);
     console.log(loggedInUser)
     updateLoggedInUser(updatedUser);
+    updatePersonalInfoOnce(updatedUserOnce)
 
     setSurnamee("");
     setStreett("");

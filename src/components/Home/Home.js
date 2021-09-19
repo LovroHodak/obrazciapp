@@ -32,7 +32,7 @@ export default function Home() {
               .map((action, i) => {
                 return (
                   <div key={i}>
-                    {action.what === "added personal info" ? (
+                    {action.what === "Added personal info" ? (
                       <Link to="/personalInfo">
                         <h5>
                           {i + 1}. {action.what}, {action.when}

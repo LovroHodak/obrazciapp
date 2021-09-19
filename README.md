@@ -47,3 +47,30 @@ NASTIMAJ SI MONGO
 8. add backend + ISO
 
 
+---TODO DETAILED---
+
+GLOBAL 
+a) css (full screen pages)
+b) mobile view
+c) 404 pages
+d) ce reloadas stran da ne izgubis vsega
+e) ko me pelje na drugo stran naj mi zmeraj prikazuje stran od vrha (npr ko se doda navbar mi ostane le ta skrit in moram poskrolat do vrha, jst pa hocem da gre iz vrha po defaultu)
+
+1. REGISTER.js (self explanatory)
+a) validation (name > 3, email regex, pass > 4)
+b) view password button
+
++ 2. LOGIN.js (self explanatory) & FIRSTPAGE.js (vmesna stran ki ti pove da je potrebno pred zacetkom vpisat osebne podatke) sta kul
+
+3. ADDPERSONALINFO.js (dodaj osebne podatke)
+a) validation (post number must be number, birthDay -> calander, country -> 
+list of countries, gender -> 3 options checkbox)
+
+
++ 4. PERSONALINFO.js (beri osebne podatke) - je kul
+
+5. ONLYPERSONALINFO.js (view and edit personal info)
+a) uredi vse ostale inpute z staes in css Forms
+b) cel naslov daj v en submit
+
+6. HOME.js

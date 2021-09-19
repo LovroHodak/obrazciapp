@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap'
 
 import "./Register.css";
@@ -56,18 +56,21 @@ export default function Register() {
       setWarningEmail(true)
       setEmaill("");
       setNamee("");
+      setPasswordd("");
     } else if (nameAlreadyExists) {
       setBorderColorUsername("border border-danger");
       setBorderColorEmail("border border-primary")
       setWarningUsername(true)
       setWarningEmail(false)
       setNamee("");
+      setPasswordd("");
     } else if (emailAlreadyExists) {
       setBorderColorEmail("border border-danger");
       setBorderColorUsername("border border-primary");
       setWarningEmail(true)
       setWarningUsername(false)
       setEmaill("");
+      setPasswordd("");
     } else {
       addNewUser(newUser);
       setNamee("");
@@ -132,9 +135,14 @@ export default function Register() {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit" className="m-1">
-          Submit
-        </Button>
+        <div className="d-flex flex-column align-items-center ">
+          <Button variant="primary" type="submit" className="m-1">
+            Submit
+          </Button>
+          <Link to='/'><Button variant="warning" className="m-1">
+            Go to Login
+          </Button></Link>
+        </div>
       </Form>
       <div>
         {users.map((user) => {
