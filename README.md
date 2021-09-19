@@ -9,25 +9,28 @@ Install:
 
 Vprasanja:
 
-1. React bootstrap (Form -> Form.Group -> controlId="formBasicEmail")
-   Isto za Name uporabljam 'controlId="formBasicEmail"'. Kje najdem vse mogoce controlId-je? Kako so sestavljeni? Kje ima bootstrap vse classa razlozene?
-2. v consoli imam 'react devtools backend.js' namesto da mi pokaze od kod prihaja error
-3. AddPersonalInfo.js
-   c) updateUser -> actions -> a pravilno dodajam ali bi moral push-at?
+1. (Login.css, in vse ostale) - position:absolute, App.css position:relative
+   na Register.js mi zlomi stran zaradi div-a kjer map-am. Na home.js mi zlomi zaradi Navbara. Kako narest da bo height zmeri 100% (to velja za vse ki niso App, ker za app ze dela) in da mi ne lomi strani
+2. (Login.js, Home.js) imam Button ki je obkrozen z Link. Ali obstaja kaka notranja funkcija v Buttnu da se obnasa kot Link?
+3. AddPersonalInfo.js bi moral ustvariti en fixed state ki se ne bo vec spreminjal
+
+4. connect mongo atlas - get old data
+
 4. AddExams.js
    a) is loggeInUser being updated ok, or should i use setters?
 5. AddExams.js & AddPersonalInfo.js -> should I move helper function 'updatedUsers' to file 'use-users'?
+6. OnlyPersonalInfo.js -> Edit -> 
+a) ali moram za vsako polje posebaj narediti state in ga potem updejtat? 
+b) kako zadrzim staro vrednost v Inputu, ki jo potem sam zbrisem in spremenim?
+7) FeedChangesDetail.js -> updejtam state actioIdNow in mi avtomatsko updejta tut loggedInUser in Users... Warum?
 
 TODO:
 
-1. DONE - Register.js - ce name, ali email ze obstajata
-2. DONE - Put all setters and functions in use-users / separation of concerns
-3. DONE - AddExams.js
-   a) function addNewExam
-   b) separation of concerns
-   c) update users
+NASTIMAJ SI MONGO
 
-4. Edit data 
+1. put buttons in Navbar from Home
+
+4. Vsak link bi moral imeti shranjeno spremembo ki je bila storjena takrat, ne pa sedajsnjo updejtano verzijo (/personalInfo)
 
 4. v Actions in Exams imam poduplirano dato (exam name, exam grade)
 

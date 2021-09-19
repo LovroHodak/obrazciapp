@@ -1,12 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 
 import { useUsers } from "../../hooks/use-users";
 
 export default function SeeAllChanges() {
   // hooks
-  const { loggedInUser } = useUsers();
-  console.log(loggedInUser);
+  const { loggedInUser, users } = useUsers();
+  console.log('loggedInUser', loggedInUser);
+  console.log("users", users);
+  // states
+      const [todoEditing, setTodoEditing] = useState(null);
+      const [editingText, setEditingText] = useState("");
+
   return (
     <div>
       <Link to="/home">

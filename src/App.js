@@ -3,7 +3,6 @@ import "./App.css";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { UsersProvider } from "./hooks/use-users";
 import Login from "./components/Login/Login";
-import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
 import AddPersonalInfo from "./components/AddPersonalInfo/AddPersonalInfo";
@@ -11,6 +10,9 @@ import AddExams from "./components/AddExams/AddExams";
 import OnlyPersonalInfo from "./components/OnlyPersonalInfo/OnlyPersonalInfo";
 import FeedChangesDetail from "./components/FeedChangesDetail.js/FeedChangesDetail";
 import SeeAllChanges from "./components/SeeAllChanges/SeeAllChanges";
+import PersonalInfo from "./components/PersonalInfo/PersonalInfo";
+import FirstPage from "./components/FirstPage/FirstPage";
+import Navbarr from "./components/Navbarr/Navbarr";
 
 function App() {
   return (
@@ -31,8 +33,22 @@ function App() {
               return <Register />;
             }}
           />
+          <Route
+            exact
+            path="/firstPage"
+            render={() => {
+              return <FirstPage />;
+            }}
+          />
+          <Route
+              exact
+              path="/addPersonalInfo"
+              render={() => {
+                return <AddPersonalInfo />;
+              }}
+            />
           <React.Fragment>
-            <Navbar />
+            <Navbarr />
             <Route
               exact
               path="/home"
@@ -40,18 +56,19 @@ function App() {
                 return <Home />;
               }}
             />
-            <Route
-              exact
-              path="/addPersonalInfo"
-              render={() => {
-                return <AddPersonalInfo />;
-              }}
-            />
+            
             <Route
               exact
               path="/onlyPersonalInfo"
               render={() => {
                 return <OnlyPersonalInfo />;
+              }}
+            />
+            <Route
+              exact
+              path="/personalInfo"
+              render={() => {
+                return <PersonalInfo />;
               }}
             />
             <Route

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Form, Button, Card, ListGroup } from 'react-bootstrap'
 
 import { useUsers } from "../../hooks/use-users";
 
@@ -8,11 +9,9 @@ export default function AddPersonalInfo() {
   let history = useHistory();
   // hooks
   const {
-    users,
     loggedInUser,
-    onlyPersonalInfo,
-    extandUserInfoInUsers,
-    extandUserInfoInLoggedInUser,
+    updateAllUsers,
+    updateLoggedInUser
   } = useUsers();
   // states - input
   const [surnamee, setSurnamee] = useState("");
@@ -50,25 +49,6 @@ export default function AddPersonalInfo() {
     setGenderr(e.target.value);
   };
   // helper function (for state - personalInfoData)
-  const additionalUserData = {
-    surname: surnamee,
-    address: {
-      street: streett,
-      number: numberr,
-      postNr: postNrr,
-      city: cityy,
-      country: countryy,
-    },
-    birthDay: birthDayy,
-    gender: genderr,
-    actions: [
-      {
-        id: new Date().getTime(),
-        what: "added personal info",
-        when: new Date().toString().slice(0, 24),
-      },
-    ],
-  };
   // (for state - loggedInUser)
   const updatedUser = {
     ...loggedInUser,
@@ -91,20 +71,14 @@ export default function AddPersonalInfo() {
     ],
     exams: [],
   };
-  // (for state - users)
-  const updatedUsers = users.map((user) => {
-    if (user.id === loggedInUser.id) {
-      return updatedUser;
-    }
-    return user;
-  });
+
   // main function - submit
   const addMyPersonalInfo = (e) => {
     e.preventDefault();
 
-    extandUserInfoInUsers(updatedUsers);
-    extandUserInfoInLoggedInUser(updatedUser);
-    onlyPersonalInfo(additionalUserData);
+    updateAllUsers(loggedInUser);
+    console.log(loggedInUser)
+    updateLoggedInUser(updatedUser);
 
     setSurnamee("");
     setStreett("");
@@ -115,100 +89,117 @@ export default function AddPersonalInfo() {
     setBirthDayy("");
     setGenderr("");
 
-    console.log(updatedUsers[loggedInUser.id - 1]);
     console.log(updatedUser);
 
     history.push("/home");
   };
 
   return (
-    <div>
-      <div>
-        <h2>Data added at Register</h2>
-        <p>ID: {loggedInUser.id}</p>
-        <p>NAME: {loggedInUser.name}</p>
-        <p>EMAIL: {loggedInUser.email}</p>
-        <p>PASSWORD: {loggedInUser.password}</p>
-      </div>
-      <h2>AddPersonalInfo</h2>
-      <form
-        onSubmit={addMyPersonalInfo}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        <label>Surname: </label>
-        <input
-          onChange={updateSurnamee}
-          type="text"
-          name="surnamee"
-          value={surnamee}
-          placeholder="Enter surname"
-          required
-        />
-        <label>Street: </label>
-        <input
-          onChange={updateStreett}
-          type="text"
-          name="streett"
-          value={streett}
-          placeholder="Enter street"
-          required
-        />
-        <label>Number: </label>
-        <input
-          onChange={updateNumberr}
-          type="number"
-          name="numberr"
-          value={numberr}
-          placeholder="Enter number"
-          required
-        />
-        <label>Post number: </label>
-        <input
-          onChange={updatePostNrr}
-          type="text"
-          name="postNrr"
-          value={postNrr}
-          placeholder="Enter post number"
-          required
-        />
-        <label>City: </label>
-        <input
-          onChange={updateCityy}
-          type="text"
-          name="cityy"
-          value={cityy}
-          placeholder="Enter city"
-          required
-        />
-        <label>Country: </label>
-        <input
-          onChange={updateCountryy}
-          type="text"
-          name="countryy"
-          value={countryy}
-          placeholder="Enter country"
-          required
-        />
-        <label>Birth day: </label>
-        <input
-          onChange={updateBirthDayy}
-          type="text"
-          name="birthDayy"
-          value={birthDayy}
-          placeholder="Enter birth day"
-          required
-        />
-        <label>Gender: </label>
-        <input
-          onChange={updateGenderr}
-          type="text"
-          name="genderr"
-          value={genderr}
-          placeholder="Enter gender"
-          required
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div className='d-flex flex-column justify-content-center align-items-center p-1'>
+      <h2>Data added at Register</h2>
+      <Card style={{ width: '18rem' }}>
+        <ListGroup variant="flush">
+          <ListGroup.Item>ID: {loggedInUser.id}</ListGroup.Item>
+          <ListGroup.Item>Name: {loggedInUser.name}</ListGroup.Item>
+          <ListGroup.Item>Email: {loggedInUser.email}</ListGroup.Item>
+          <ListGroup.Item>Password: {loggedInUser.password}</ListGroup.Item>
+        </ListGroup>
+      </Card>
+      <h2>Add Personal Data</h2>
+      <Form onSubmit={addMyPersonalInfo} style={{ maxWidth: 500 }}>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Surname: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter surname"
+            onChange={updateSurnamee}
+            name="surnamee"
+            value={surnamee}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Street: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter street"
+            onChange={updateStreett}
+            name="streett"
+            value={streett}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Number: </Form.Label>
+          <Form.Control
+            type="number"
+            placeholder="Enter number"
+            onChange={updateNumberr}
+            name="numbertr"
+            value={numberr}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Post number: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter post number"
+            onChange={updatePostNrr}
+            name="postNrr"
+            value={postNrr}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>City: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter city"
+            onChange={updateCityy}
+            name="cityy"
+            value={cityy}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Country: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter country"
+            onChange={updateCountryy}
+            name="countryy"
+            value={countryy}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Birth day: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter date of birth"
+            onChange={updateBirthDayy}
+            name="birthDayy"
+            value={birthDayy}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Gender: </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter gender"
+            onChange={updateGenderr}
+            name="genderr"
+            value={genderr}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className="m-1">
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 }

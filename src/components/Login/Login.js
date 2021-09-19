@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory, Link } from "react-router-dom";
+import {Form, Button} from 'react-bootstrap'
 
 import "./Login.css";
 import { useUsers } from "../../hooks/use-users";
@@ -8,13 +9,21 @@ export default function Login() {
   // history
   let history = useHistory();
   // hooks
-  const { users, setLoggedInUser } = useUsers();
+  const { users, addLoggedInUser } = useUsers();
   // 1) states - input
   const [emaill, setEmaill] = useState("");
   const [passwordd, setPasswordd] = useState("");
   // 2) states
-  const [warningUserDoesntExist, setWarningUserDoesntExist] = useState(false);
-  const [warningPassword, setWarningPassword] = useState(false);
+  const [borderColorEmail, setBorderColorEmail] = useState("border border-primary");
+  const [borderColorPassword, setBorderColorPassword] = useState(
+    "border border-primary"
+  );
+  const [warningEmail, setWarningEmail] = useState(false);
+  const [warningPassword, setWarningPassword] = useState(
+    false
+  );
+
+  
   
   // FUNCTIONS
   // inputs function - handler
@@ -26,86 +35,89 @@ export default function Login() {
   };
   // helper function 
   const loginStatus = () => {
-    const correctMailPass = users.find(
-      (user) => user.email === emaill && user.password === passwordd
-    );
     const correctMailWrongPass = users.find(
       (user) => user.email === emaill && user.password !== passwordd
     );
+    const correctMailPass = users.find(
+      (user) => user.email === emaill && user.password === passwordd
+    );
 
     if (correctMailWrongPass) {
-      setWarningPassword(true);
-      setWarningUserDoesntExist(false);
       setPasswordd("");
-    } else if (!correctMailPass && !correctMailWrongPass) {
-      setWarningUserDoesntExist(true);
-      setWarningPassword(false);
+      setBorderColorEmail("border border-primary");
+      setBorderColorPassword("border border-danger");
+      setWarningPassword(true)
+      setWarningEmail(false)
+    } else if (!correctMailPass) {
       setEmaill("");
       setPasswordd("");
+      setBorderColorEmail("border border-danger");
+      setBorderColorPassword("border border-danger");
+      setWarningEmail(true)
     } else {
-      setLoggedInUser(correctMailPass);
+      addLoggedInUser(correctMailPass);
+      console.log(correctMailPass);
       setEmaill("");
       setPasswordd("");
-      history.push("/home");
+      history.push("/firstPage");
     }
   };
   // main function - submit
   const checkLogin = (e) => {
     e.preventDefault();
     loginStatus();
+
+    console.log(users)
+    
   };
 
   return (
-    <div className="login">
+    <div
+      className="border border-warning d-flex flex-column align-items-center p-1
+ login"
+    >
       <h1>Login</h1>
-      <form onSubmit={checkLogin} className="loginForm">
-        <label>Email:</label>
-        <input
-          onChange={updateEmaill}
-          type="email"
-          name="emaill"
-          value={emaill}
-          placeholder="Enter email"
-          required
-        />
-        <label>Password:</label>
-        <input
-          onChange={updatePasswordd}
-          type="password"
-          name="passwordd"
-          value={passwordd}
-          placeholder="Enter password"
-          required
-        />
-        <button type="submit">Submit</button>
-        {warningPassword ? (
-          <h4 style={{ color: "red" }}>Wrong password!</h4>
-        ) : (
-          <></>
-        )}
-        {warningUserDoesntExist ? (
-          <h4 style={{ color: "red" }}>User doesnt exist!</h4>
-        ) : (
-          <></>
-        )}
-      </form>
-      <div>
-        <Link to="/register">
-          <button variant="danger">Go to register</button>
-        </Link>
-      </div>
-      <div>
-        {users.map((user) => {
-          return (
-            <div key={user.id}>
-              <p>{user.id}</p>
-              <p>{user.name}</p>
-              <p>{user.email}</p>
-              <p>{user.password}</p>
-            </div>
-          );
-        })}
-      </div>
+      <Form onSubmit={checkLogin} style={{ maxWidth: 500 }}>
+        <Form.Group className="mb-3 " controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            className={borderColorEmail}
+            type="email"
+            placeholder="Enter email"
+            onChange={updateEmaill}
+            name="emaill"
+            value={emaill}
+            required
+          />
+          {warningEmail ? (<Form.Text className="text-muted">
+            User doesnt exist.
+          </Form.Text>) : (<></>)}
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            className={borderColorPassword}
+            type="password"
+            placeholder="Password"
+            onChange={updatePasswordd}
+            name="passwordd"
+            value={passwordd}
+            required
+          />
+          {warningPassword ? (<Form.Text className="text-muted">
+            Wrong password.
+          </Form.Text>) : (<></>)}
+        </Form.Group>
+        <div className="d-flex flex-column align-items-center ">
+          <Button variant="primary" type="submit" className="m-1">
+            Submit
+          </Button>
+          <Link to='/register'><Button variant="warning" className="m-1">
+            Go to register
+          </Button></Link>
+        </div>
+      </Form>
     </div>
   );
 }

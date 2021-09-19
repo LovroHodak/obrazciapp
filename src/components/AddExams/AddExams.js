@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Form, Button, Card } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
 
 export default function AddExams() {
   // hooks
-  const { users, loggedInUser, extandUserInfoInUsers } = useUsers();
+  const { users, loggedInUser, updateAllUsers } = useUsers();
   // state - input
   const [examName, setExamName] = useState("");
   const [examGrade, setExamGrade] = useState("");
@@ -35,84 +36,71 @@ export default function AddExams() {
       what: "added new exam",
       when: new Date().toString().slice(0, 24),
       name: examName,
-      grade: examGrade
+      grade: examGrade,
+      change: 'Exams'
     });
-    loggedInUser.exams.push({ name: examName, grade: examGrade });
-    extandUserInfoInUsers(updatedUsers);
+    loggedInUser.exams.push({
+      name: examName,
+      grade: examGrade,
+      id: new Date().getTime(),
+      when: new Date().toString().slice(0, 24),
+    });
+    updateAllUsers(loggedInUser);
     setExamName("");
     setExamGrade("");
 
     console.log(loggedInUser);
-    console.log(updatedUsers[loggedInUser.id - 1]);
   };
   return (
-    <div>
+    <div className='d-flex flex-column justify-content-center align-items-center p-1'>
       <h1>AddExams</h1>
-      <Link to='/home'><button>Back Home</button></Link>
-      <form onSubmit={addNewExam}>
-        <label>Exam name:</label>
-        <input
-          onChange={updateExamName}
-          type="text"
-          name="examName"
-          value={examName}
-          placeholder="Enter exam name"
-          required
-        />
-        <label>Grade:</label>
-        <input
-          onChange={updateExamGrade}
-          type="text"
-          name="examGrade"
-          value={examGrade}
-          placeholder="Enter exam grade"
-          required
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <Form onSubmit={addNewExam} style={{ maxWidth: 500 }}>
+        <Form.Group className="mb-3 " controlId="formBasicEmail">
+          <Form.Label>Exam name:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter exam name"
+            onChange={updateExamName}
+            name="examName"
+            value={examName}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Exam grade:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Exam grade"
+            onChange={updateExamGrade}
+            name="examGrade"
+            value={examGrade}
+            required
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit" className="m-1">
+          Submit
+        </Button>
+      </Form>
 
       <div>
-        <p>{loggedInUser.id}</p>
-        <p>{loggedInUser.name}</p>
-        <p>{loggedInUser.surname}</p>
-        <div style={{ border: "1px solid green" }}>
-          <p>{loggedInUser.address.street}</p>
-          <p>{loggedInUser.address.number}</p>
-          <p>{loggedInUser.address.postNr}</p>
-          <p>{loggedInUser.address.city}</p>
-          <p>{loggedInUser.address.country}</p>
-        </div>
-        <p>{loggedInUser.birthDay}</p>
-        <p>{loggedInUser.gender}</p>
-        <div style={{ border: "1px solid orange" }}>
-          {loggedInUser.exams ? (
-            <div>
-              {loggedInUser.exams.map((exam, i) => {
-                return (
-                  <div key={i} style={{ border: "1px solid pink" }}>
-                    <p>{exam.name}</p>
-                    <p>{exam.grade}</p>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
-        <p>{loggedInUser.email}</p>
-        <p>{loggedInUser.password}</p>
-        <div style={{ border: "1px solid grey" }}>
-          {loggedInUser.actions.map((action, i) => {
-            return (
-              <div key={i} style={{ border: "1px solid pink" }}>
-                <p>{action.id}</p>
-                <p>{action.what}</p>
-                <p>{action.when}</p>
-              </div>
-            );
-          })}
-        </div>
+        {loggedInUser.exams ? (
+          <div>
+            {loggedInUser.exams.map((exam, i) => {
+              return (
+                <Card key={i} style={{ width: "18rem" }}>
+                  <Card.Body>
+                    <Card.Title>{exam.name}</Card.Title>
+                    <Card.Text>{exam.grade}</Card.Text>
+                    <Card.Text className="text-muted">{exam.when}</Card.Text>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
