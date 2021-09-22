@@ -15,6 +15,8 @@ import FirstPage from "./components/FirstPage/FirstPage";
 import Navbarr from "./components/Navbarr/Navbarr";
 import InfoOnTime from "./components/InfoOnTime/InfoOnTime";
 import AllExams from "./components/AllExams/AllExams";
+import Index from "./components/Index/Index";
+import EditExam from "./components/EditExam/EditExam";
 
 function App() {
   return (
@@ -89,11 +91,27 @@ function App() {
             />
             <Route
               exact
+              path="/index"
+              render={() => {
+                return <Index />;
+              }}
+            />
+            <Route
+              exact
               path="/feedChangesDetail/:id"
               render={(routeProps) => {
                 return <FeedChangesDetail {...routeProps} />;
               }}
             />
+
+            <Route
+              exact
+              path="/editExam/:id"
+              render={(routeProps) => {
+                return <EditExam {...routeProps} />;
+              }}
+            />
+
             <Route
               exact
               path="/addExams"

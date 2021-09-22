@@ -47,8 +47,6 @@ export default function OnlyPersonalInfo() {
   let newAction = {
     id: new Date().getTime(),
     when: new Date().toString().slice(0, 24),
-    /* name: "empty",
-    grade: "empty", */
   };
 
   // FUNCTIONS
@@ -63,9 +61,6 @@ export default function OnlyPersonalInfo() {
       userSurnamee: loggedInUser.surname,
       oldUserNamee: fixed.name,
       oldUserSurnamee: fixed.surname 
-      /* change: { first: loggedInUser.name, second: loggedInUser.surname },
-      oldData: { first: fixed.name, second: fixed.surname },
-      propNames: { first: "name", second: "surname" }, */
     });
 
     updateAllUsers(loggedInUser);
@@ -90,9 +85,6 @@ export default function OnlyPersonalInfo() {
       userPasswordd: loggedInUser.password,
       oldUserEmaill: fixed.email,
       oldUserPasswordd: fixed.password 
-      /* oldData: { first: fixed.email, second: fixed.password },
-      change: { first: loggedInUser.email, second: loggedInUser.password },
-      propNames: { first: "email", second: "password" }, */
     });
 
     updateAllUsers(loggedInUser);
@@ -117,9 +109,6 @@ export default function OnlyPersonalInfo() {
       userGenderr: loggedInUser.gender,
       oldUserBirthdayy: fixed.birthDay,
       oldUserGenderr: fixed.gender 
-      /* oldData: { first: fixed.birthDay, second: fixed.gender },
-      change: { first: loggedInUser.birthDay, second: loggedInUser.gender },
-      propNames: { first: "birth day", second: "gender" }, */
     });
 
     updateAllUsers(loggedInUser);

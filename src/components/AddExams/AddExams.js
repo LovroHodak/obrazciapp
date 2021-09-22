@@ -21,8 +21,6 @@ export default function AddExams() {
   const updateExamGrade = (e) => {
     setExamGrade(e.target.value);
   };
-  // helper functions
-  
 
   // main function - submit
   const addNewExam = (e) => {
@@ -34,12 +32,6 @@ export default function AddExams() {
       when: new Date().toString().slice(0, 24),
       examNamee: examName,
       examGradee: examGrade
-      
-      /* name: examName,
-      grade: examGrade,
-      change: {first: 'empty', second: 'empty'},
-      oldData: {first: 'empty', second: 'empty'},
-      propNames: {first: 'empty', second: 'empty'} */
     });
     loggedInUser.exams.push({
       name: examName,
@@ -86,26 +78,6 @@ export default function AddExams() {
           Submit
         </Button>
       </Form>
-
-      <div>
-        {loggedInUser.exams ? (
-          <div>
-            {loggedInUser.exams.map((exam, i) => {
-              return (
-                <Card key={i} style={{ width: "18rem" }}>
-                  <Card.Body>
-                    <Card.Title>{exam.name}</Card.Title>
-                    <Card.Text>{exam.grade}</Card.Text>
-                    <Card.Text className="text-muted">{exam.when}</Card.Text>
-                  </Card.Body>
-                </Card>
-              );
-            })}
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
     </div>
   );
 }

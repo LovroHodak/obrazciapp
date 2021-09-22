@@ -79,6 +79,7 @@ export function UsersProvider(props) {
         users,
         addNewUser,
         updateAllUsers,
+        setLoggedInUser,
 
         loggedInUser,
         addLoggedInUser,

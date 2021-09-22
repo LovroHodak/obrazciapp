@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Card, ListGroup, Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { useUsers } from "../../hooks/use-users";
 
@@ -45,9 +46,11 @@ export default function FeedChangesDetail(props) {
           </Card.Header>
 
           {actionIdNow.examNamee ? (
-            <Card.Text>
-              {actionIdNow.examNamee}: {actionIdNow.examGradee}{" "}
-            </Card.Text>
+         
+              <Card.Text className='m-3'>
+                {actionIdNow.examNamee}: {actionIdNow.examGradee}{" "}
+              </Card.Text>
+              
           ) : (
             <></>
           )}
@@ -83,10 +86,9 @@ export default function FeedChangesDetail(props) {
               Changed street from {actionIdNow.oldUserStreett} to{" "}
               {actionIdNow.userStreett}, street number from{" "}
               {actionIdNow.oldUserNumberr} to {actionIdNow.userNumberr}, city
-              from
-              {actionIdNow.oldUserCityy} to {actionIdNow.userCityy}, post number
-              from {actionIdNow.oldUserPostNrr} to {actionIdNow.userPostNrr} and
-              country from
+              from {actionIdNow.oldUserCityy} to {actionIdNow.userCityy}, post
+              number from {actionIdNow.oldUserPostNrr} to{" "}
+              {actionIdNow.userPostNrr} and country from{" "}
               {actionIdNow.oldUserCountryy} to {actionIdNow.userCountryy}.
             </Card.Text>
           ) : (

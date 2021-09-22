@@ -18,7 +18,17 @@ export default function Home() {
       <div className="d-flex flex-column align-items-center p-1">
         <h1>Howdy {loggedInUser.name}! </h1>
         <div>
-        <Link to="/onlyPersonalInfo">
+          <Link to="/index">
+            <Button className="m-1" variant="info">
+              Index
+            </Button>
+          </Link>
+          <Link to="/infoOnTime">
+            <Button className="m-1" variant="info">
+              Personal Info
+            </Button>
+          </Link>
+          <Link to="/onlyPersonalInfo">
             <Button className="m-1" variant="info">
               Edit personal info
             </Button>
@@ -28,34 +38,17 @@ export default function Home() {
               Add exam
             </Button>
           </Link>
-          <Link to='/infoOnTime'><Button className="m-1" variant="info">
-            Personal Info
-          </Button></Link>
-          <Link to='/allExams'>
-          <Button className="m-1" variant="info">
-            All exams
-          </Button>
+
+          <Link to="/allExams">
+            <Button className="m-1" variant="info">
+              Edit exams
+            </Button>
           </Link>
-
-
-
           <Link to="/seeAllChanges">
             <Button className="m-1" variant="info">
               See all changes in one place
             </Button>
           </Link>
-          
-
-          
-          
-          <Button className="m-1" variant="info">
-            Edit exams
-          </Button>
-          
-         
-          <Button className="m-1" variant="info">
-            Personal Info & Exams
-          </Button>
         </div>
 
         <div>

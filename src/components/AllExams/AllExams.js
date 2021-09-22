@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, ListGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { useUsers } from "../../hooks/use-users";
 
@@ -18,11 +19,11 @@ export default function AllExams() {
               return (
                 <ListGroup variant="flush">
                   <Card.Header className="bg-secondary text-light">
-                    {exam.when}
+                  {exam.name}: {exam.grade}
                   </Card.Header>
-                  <ListGroup.Item>{exam.name}</ListGroup.Item>
-                  <ListGroup.Item>{exam.grade}</ListGroup.Item>
                   <ListGroup.Item>ID: {exam.id}</ListGroup.Item>
+                  <Link to={`/editExam/${exam.id}`}><Button className='w-100'>Edit</Button></Link>
+                  <ListGroup.Item  className="text-muted">{exam.when}</ListGroup.Item>
                 </ListGroup>
               );
             })}

@@ -72,12 +72,6 @@ export default function AddPersonalInfo() {
         id: new Date().getTime(),
         what: "Added personal info",
         when: new Date().toString().slice(0, 24),
-
-        /* name: 'empty',
-        grade: 'empty',
-        change: {first: 'empty', second: 'empty'},
-        oldData: {first: 'empty', second: 'empty'},
-        propNames: {first: 'empty', second: 'empty'} */
       },
     ],
     exams: [],
@@ -99,13 +93,7 @@ export default function AddPersonalInfo() {
       {
         id: new Date().getTime(),
         what: "Added personal info",
-        when: new Date().toString().slice(0, 24),
-      
-        /* name: 'empty',
-        grade: 'empty',
-        change: {first: 'empty', second: 'empty'},
-        oldData: {first: 'empty', second: 'empty'},
-        propNames: {first: 'empty', second: 'empty'} */
+        when: new Date().toString().slice(0, 24)
       },
     ],
     exams: [],

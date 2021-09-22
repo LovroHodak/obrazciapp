@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Form, Button, Card, ListGroup } from "react-bootstrap";
+import React from 'react'
+import { Card, Button, ListGroup } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
 
-export default function InfoOnTime() {
-    const { loggedInUser } = useUsers();
+
+
+export default function Index() {
+
+    // hooks
+  const { loggedInUser } = useUsers();
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center p-1">
-     
-      <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "18rem" }}>
         <Card.Body>
           <Card.Title>Personal Info</Card.Title>
           <ListGroup variant="flush">
@@ -42,8 +45,21 @@ export default function InfoOnTime() {
               Country: {loggedInUser.address.country}
             </ListGroup.Item>
           </ListGroup>
+          <Card.Title>Exams</Card.Title>
+
+            {loggedInUser.exams.map((exam, i) => {
+              return (
+                <ListGroup variant="flush">
+                  <Card.Header className="bg-secondary text-light">
+                  {exam.name}: {exam.grade}
+                  </Card.Header>
+                  <ListGroup.Item>ID: {exam.id}</ListGroup.Item>
+                  <ListGroup.Item  className="text-muted">{exam.when}</ListGroup.Item>
+                </ListGroup>
+              );
+            })}
         </Card.Body>
       </Card>
-    </div>
+        </div>
     )
 }
