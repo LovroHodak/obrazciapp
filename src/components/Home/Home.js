@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button } from "react-bootstrap";
 
 import "./Home.css";
 import { useUsers } from "../../hooks/use-users";
@@ -12,52 +12,79 @@ export default function Home() {
   const logOut = () => {
     logMeOut();
   };
-  console.log(users)
+  console.log(users);
   return (
     <div className="d-flex flex-column align-items-center p-1 home">
-        <div className="d-flex flex-column align-items-center p-1">
-          <h1>Howdy {loggedInUser.name}! </h1>
-          <div><Link to="/seeAllChanges">
-            <Button className='m-1' variant='info'>See all changes in one place</Button>
+      <div className="d-flex flex-column align-items-center p-1">
+        <h1>Howdy {loggedInUser.name}! </h1>
+        <div>
+        <Link to="/onlyPersonalInfo">
+            <Button className="m-1" variant="info">
+              Edit personal info
+            </Button>
           </Link>
           <Link to="/addExams">
-            <Button  className='m-1' variant='info'>Add exams</Button>
+            <Button className="m-1" variant="info">
+              Add exam
+            </Button>
           </Link>
-          <Link to="/onlyPersonalInfo">
-            <Button  className='m-1' variant='info'>Personal info</Button>
-          </Link></div>
-          
-          <div>
-            {loggedInUser.actions
-              .map((action, i) => {
-                return (
-                  <div key={i}>
-                    {action.what === "Added personal info" ? (
-                      <Link to="/personalInfo">
-                        <h5>
-                          {i + 1}. {action.what}, {action.when}
-                        </h5>
-                      </Link>
-                    ) : (
-                      <Link to={`/feedChangesDetail/${action.id}`}>
-                        <h5>
-                          {i + 1}. {action.what} to: {action.change},{" "}
-                          {action.when}
-                        </h5>
-                      </Link>
-                    )}
-                  </div>
-                );
-              })
-              .reverse()}
-          </div>
-          <Button variant='danger' onClick={logOut} style={{ margin: 30 }}>
-        Log Out
-      </Button>
-        </div>
-      
-      
+          <Link to='/infoOnTime'><Button className="m-1" variant="info">
+            Personal Info
+          </Button></Link>
+          <Link to='/allExams'>
+          <Button className="m-1" variant="info">
+            All exams
+          </Button>
+          </Link>
 
+
+
+          <Link to="/seeAllChanges">
+            <Button className="m-1" variant="info">
+              See all changes in one place
+            </Button>
+          </Link>
+          
+
+          
+          
+          <Button className="m-1" variant="info">
+            Edit exams
+          </Button>
+          
+         
+          <Button className="m-1" variant="info">
+            Personal Info & Exams
+          </Button>
+        </div>
+
+        <div>
+          {loggedInUser.actions
+            .map((action, i) => {
+              return (
+                <div key={i}>
+                  {action.what === "Added personal info" ? (
+                    <Link to="/personalInfo">
+                      <h5>
+                        {i + 1}. {action.what}, {action.when}
+                      </h5>
+                    </Link>
+                  ) : (
+                    <Link to={`/feedChangesDetail/${action.id}`}>
+                      <h5>
+                        {i + 1}. {action.what}, {action.when}
+                      </h5>
+                    </Link>
+                  )}
+                </div>
+              );
+            })
+            .reverse()}
+        </div>
+        <Button variant="danger" onClick={logOut} style={{ margin: 30 }}>
+          Log Out
+        </Button>
+      </div>
     </div>
   );
 }

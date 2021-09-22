@@ -45,6 +45,7 @@ export function UsersProvider(props) {
       return user;
     });
     setUsers(updatedUsers);
+    console.log(updatedUsers)
   };
 
   // loggedInUser

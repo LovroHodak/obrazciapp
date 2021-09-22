@@ -60,17 +60,27 @@ e) ko me pelje na drugo stran naj mi zmeraj prikazuje stran od vrha (npr ko se d
 a) validation (name > 3, email regex, pass > 4)
 b) view password button
 
-+ 2. LOGIN.js (self explanatory) & FIRSTPAGE.js (vmesna stran ki ti pove da je potrebno pred zacetkom vpisat osebne podatke) sta kul
+2. LOGIN.js (self explanatory)
+a) validation (email regex, pass > 4)
 
-3. ADDPERSONALINFO.js (dodaj osebne podatke)
++ 3. FIRSTPAGE.js (vmesna stran ki ti pove da je potrebno pred zacetkom vpisat osebne podatke) sta kul
+
+4. ADDPERSONALINFO.js (dodaj osebne podatke)
 a) validation (post number must be number, birthDay -> calander, country -> 
 list of countries, gender -> 3 options checkbox)
 
 
-+ 4. PERSONALINFO.js (beri osebne podatke) - je kul
++ 5. PERSONALINFO.js (beri osebne podatke) - je kul
 
-5. ONLYPERSONALINFO.js (view and edit personal info)
-a) uredi vse ostale inpute z staes in css Forms
-b) cel naslov daj v en submit
+6. ONLYPERSONALINFO.js (view and edit personal info)
+a) uredi actions property
 
-6. HOME.js
+7. FEEDCHANGESDETAIL.js 
+a) ce ni prislo do spremembe propertyja ga ne renderaj
+b) dej conditional renderinge v funkcijo in v state
+
+7. HOME.js
+
+
+
+Grade editing

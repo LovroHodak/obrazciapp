@@ -13,6 +13,8 @@ import SeeAllChanges from "./components/SeeAllChanges/SeeAllChanges";
 import PersonalInfo from "./components/PersonalInfo/PersonalInfo";
 import FirstPage from "./components/FirstPage/FirstPage";
 import Navbarr from "./components/Navbarr/Navbarr";
+import InfoOnTime from "./components/InfoOnTime/InfoOnTime";
+import AllExams from "./components/AllExams/AllExams";
 
 function App() {
   return (
@@ -69,6 +71,20 @@ function App() {
               path="/personalInfo"
               render={() => {
                 return <PersonalInfo />;
+              }}
+            />
+            <Route
+              exact
+              path="/infoOnTime"
+              render={() => {
+                return <InfoOnTime />;
+              }}
+            />
+            <Route
+              exact
+              path="/allExams"
+              render={() => {
+                return <AllExams />;
               }}
             />
             <Route

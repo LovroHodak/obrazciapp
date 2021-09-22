@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {  useHistory, Link } from "react-router-dom";
-import {Form, Button} from 'react-bootstrap'
+import { useHistory, Link } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 
 import "./Login.css";
 import { useUsers } from "../../hooks/use-users";
@@ -10,21 +10,21 @@ export default function Login() {
   let history = useHistory();
   // hooks
   const { users, addLoggedInUser } = useUsers();
-  // 1) states - input
+
+  // STATES
+  // states - input
   const [emaill, setEmaill] = useState("");
   const [passwordd, setPasswordd] = useState("");
-  // 2) states
-  const [borderColorEmail, setBorderColorEmail] = useState("border border-primary");
+  // states - warnings
+  const [borderColorEmail, setBorderColorEmail] = useState(
+    "border border-primary"
+  );
   const [borderColorPassword, setBorderColorPassword] = useState(
     "border border-primary"
   );
   const [warningEmail, setWarningEmail] = useState(false);
-  const [warningPassword, setWarningPassword] = useState(
-    false
-  );
+  const [warningPassword, setWarningPassword] = useState(false);
 
-  
-  
   // FUNCTIONS
   // inputs function - handler
   const updateEmaill = (e) => {
@@ -33,7 +33,7 @@ export default function Login() {
   const updatePasswordd = (e) => {
     setPasswordd(e.target.value);
   };
-  // helper function 
+  // helper function - validation
   const loginStatus = () => {
     const correctMailWrongPass = users.find(
       (user) => user.email === emaill && user.password !== passwordd
@@ -46,14 +46,14 @@ export default function Login() {
       setPasswordd("");
       setBorderColorEmail("border border-primary");
       setBorderColorPassword("border border-danger");
-      setWarningPassword(true)
-      setWarningEmail(false)
+      setWarningPassword(true);
+      setWarningEmail(false);
     } else if (!correctMailPass) {
       setEmaill("");
       setPasswordd("");
       setBorderColorEmail("border border-danger");
       setBorderColorPassword("border border-danger");
-      setWarningEmail(true)
+      setWarningEmail(true);
     } else {
       addLoggedInUser(correctMailPass);
       console.log(correctMailPass);
@@ -67,8 +67,7 @@ export default function Login() {
     e.preventDefault();
     loginStatus();
 
-    console.log(users)
-    
+    console.log(users);
   };
 
   return (
@@ -89,11 +88,12 @@ export default function Login() {
             value={emaill}
             required
           />
-          {warningEmail ? (<Form.Text className="text-muted">
-            User doesnt exist.
-          </Form.Text>) : (<></>)}
+          {warningEmail ? (
+            <Form.Text className="text-muted">User doesnt exist.</Form.Text>
+          ) : (
+            <></>
+          )}
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -105,17 +105,21 @@ export default function Login() {
             value={passwordd}
             required
           />
-          {warningPassword ? (<Form.Text className="text-muted">
-            Wrong password.
-          </Form.Text>) : (<></>)}
+          {warningPassword ? (
+            <Form.Text className="text-muted">Wrong password.</Form.Text>
+          ) : (
+            <></>
+          )}
         </Form.Group>
         <div className="d-flex flex-column align-items-center ">
           <Button variant="primary" type="submit" className="m-1">
             Submit
           </Button>
-          <Link to='/register'><Button variant="warning" className="m-1">
-            Go to register
-          </Button></Link>
+          <Link to="/register">
+            <Button variant="warning" className="m-1">
+              Go to register
+            </Button>
+          </Link>
         </div>
       </Form>
     </div>

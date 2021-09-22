@@ -7,12 +7,9 @@ import { useUsers } from "../../hooks/use-users";
 export default function OnlyPersonalInfo() {
   // hooks
   const { loggedInUser, users, updateAllUsers } = useUsers();
-  // state - input
-  const [surnameEditing, setSurnameEditing] = useState(false);
-  const [surnameEditingText, setSurnameEditingText] = useState(
-    loggedInUser.surname
-  );
 
+  // STATES
+  // fixed state - for old data
   const [fixed, setFixed] = useState({});
 
   useEffect(() => {
@@ -21,11 +18,17 @@ export default function OnlyPersonalInfo() {
     console.log(imutableData);
   }, []);
 
-  console.log("FIXED DATA", fixed);
-
-  const [nameEditing, setNameEditing] = useState(false);
-  const [nameEditingText, setNameEditingText] = useState(loggedInUser.name);
-
+  // states - input
+  const [nameSurnamEditing, setNameSurnameEditing] = useState(false);
+  const [nameSurnameEditingData, setNameSurnameEditingData] = useState({
+    name: loggedInUser.name,
+    surname: loggedInUser.surname,
+  });
+  const [mailPassEditing, setMailPassEditing] = useState(false);
+  const [mailPassEditingData, setMailPassEditingData] = useState({
+    email: loggedInUser.email,
+    password: loggedInUser.password,
+  });
   const [addressObjEditing, setAddressEditing] = useState(false);
   const [addressEditingData, setAddressEditingData] = useState({
     city: loggedInUser.address.city,
@@ -34,43 +37,43 @@ export default function OnlyPersonalInfo() {
     postNr: loggedInUser.address.postNr,
     street: loggedInUser.address.street,
   });
-
-  const [mailPassEditing, setMailPassEditing] = useState(false);
-  const [mailPassEditingData, setMailPassEditingData] = useState({
-    email: loggedInUser.email,
-    password: loggedInUser.password,
-  });
-
   const [birthGenderEditing, setBirthGenderEditing] = useState(false);
   const [birthGenderEditingData, setBirthGenderEditingData] = useState({
     birthDay: loggedInUser.birthDay,
     gender: loggedInUser.gender,
   });
 
+  // new OBJECT - on spot
   let newAction = {
     id: new Date().getTime(),
-    what: "",
     when: new Date().toString().slice(0, 24),
-    oldData: "",
-    change: "",
+    /* name: "empty",
+    grade: "empty", */
   };
 
+  // FUNCTIONS
   // helper function
-  function editBirthGender(){
-    loggedInUser.birthDay = birthGenderEditingData.birthDay;
-    loggedInUser.gender = birthGenderEditingData.gender;
-
+  function editNameSurname() {
+    loggedInUser.name = nameSurnameEditingData.name;
+    loggedInUser.surname = nameSurnameEditingData.surname;
     loggedInUser.actions.push({
       ...newAction,
-      what: "Edited birth & gender info",
-      oldData: "Old birth day & gender",
-      change: "New birth day& gender",
+      what: `Change created at name and surname`,
+      userNamee: loggedInUser.name,
+      userSurnamee: loggedInUser.surname,
+      oldUserNamee: fixed.name,
+      oldUserSurnamee: fixed.surname 
+      /* change: { first: loggedInUser.name, second: loggedInUser.surname },
+      oldData: { first: fixed.name, second: fixed.surname },
+      propNames: { first: "name", second: "surname" }, */
     });
 
-    setBirthGenderEditing(false);
-    setBirthGenderEditingData({
-      birthDay: loggedInUser.birthDay,
-      gender: loggedInUser.gender,
+    updateAllUsers(loggedInUser);
+
+    setNameSurnameEditing(false);
+    setNameSurnameEditingData({
+      name: loggedInUser.name,
+      surname: loggedInUser.surname,
     });
 
     console.log("logg", loggedInUser);
@@ -80,18 +83,51 @@ export default function OnlyPersonalInfo() {
   function editMailPass() {
     loggedInUser.email = mailPassEditingData.email;
     loggedInUser.password = mailPassEditingData.password;
-
     loggedInUser.actions.push({
       ...newAction,
-      what: "Edited register info",
-      oldData: "Old email and password",
-      change: "New email and password",
+      what: `Change created at email and password`,
+      userEmaill: loggedInUser.email,
+      userPasswordd: loggedInUser.password,
+      oldUserEmaill: fixed.email,
+      oldUserPasswordd: fixed.password 
+      /* oldData: { first: fixed.email, second: fixed.password },
+      change: { first: loggedInUser.email, second: loggedInUser.password },
+      propNames: { first: "email", second: "password" }, */
     });
+
+    updateAllUsers(loggedInUser);
 
     setMailPassEditing(false);
     setMailPassEditingData({
       email: loggedInUser.email,
       password: loggedInUser.password,
+    });
+
+    console.log("logg", loggedInUser);
+    console.log("users", users);
+  }
+
+  function editBirthGender() {
+    loggedInUser.birthDay = birthGenderEditingData.birthDay;
+    loggedInUser.gender = birthGenderEditingData.gender;
+    loggedInUser.actions.push({
+      ...newAction,
+      what: `Change  created at birth day and gender`,
+      userBirthdayy: loggedInUser.birthDay,
+      userGenderr: loggedInUser.gender,
+      oldUserBirthdayy: fixed.birthDay,
+      oldUserGenderr: fixed.gender 
+      /* oldData: { first: fixed.birthDay, second: fixed.gender },
+      change: { first: loggedInUser.birthDay, second: loggedInUser.gender },
+      propNames: { first: "birth day", second: "gender" }, */
+    });
+
+    updateAllUsers(loggedInUser);
+
+    setBirthGenderEditing(false);
+    setBirthGenderEditingData({
+      birthDay: loggedInUser.birthDay,
+      gender: loggedInUser.gender,
     });
 
     console.log("logg", loggedInUser);
@@ -104,13 +140,22 @@ export default function OnlyPersonalInfo() {
     loggedInUser.address.number = addressEditingData.number;
     loggedInUser.address.postNr = addressEditingData.postNr;
     loggedInUser.address.street = addressEditingData.street;
-
     loggedInUser.actions.push({
       ...newAction,
-      what: "Edited ADDRESS",
-      oldData: "Old Address",
-      change: "New Address",
+      what: `Changed address`,
+      userStreett: loggedInUser.address.street,
+      oldUserStreett: fixed.address.street,
+      userNumberr: loggedInUser.address.number,
+      oldUserNumberr: fixed.address.number,
+      userCityy: loggedInUser.address.city,
+      oldUserCityy: fixed.address.city,
+      userPostNrr: loggedInUser.address.postNr,
+      oldUserPostNrr: fixed.address.postNr,
+      userCountryy: loggedInUser.address.country,
+      oldUserCountryy: fixed.address.country
     });
+
+    updateAllUsers(loggedInUser);
 
     setAddressEditing(false);
     setAddressEditingData({
@@ -124,68 +169,47 @@ export default function OnlyPersonalInfo() {
     console.log("logg", loggedInUser);
     console.log("users", users);
   }
-  // edit SURNAME function
-  function editSurname() {
-    loggedInUser.surname = surnameEditingText;
-
-    loggedInUser.actions.push({
-      ...newAction,
-      what: "Edited SURNAME",
-      oldData: fixed.surname,
-      change: surnameEditingText,
-    });
-
-    setSurnameEditing(false);
-    setSurnameEditingText(loggedInUser.surname);
-
-    updateAllUsers(loggedInUser);
-
-    console.log("logg", loggedInUser);
-    console.log("users", users);
-  }
-
-  function editName() {
-    loggedInUser.name = nameEditingText;
-
-    loggedInUser.actions.push({
-      ...newAction,
-      what: "Edited NAME",
-      oldData: fixed.name,
-      change: nameEditingText,
-    });
-
-    setNameEditing(false);
-    setNameEditingText(loggedInUser.name);
-
-    updateAllUsers(loggedInUser);
-
-    console.log("logg", loggedInUser);
-    console.log("users", users);
-  }
 
   return (
     <div>
-      <h1 style={{textAlign: 'center'}}>Personal Info</h1>
+      <h1 style={{ textAlign: "center" }}>Personal Info</h1>
       <Card>
-          <Card.Body className='d-flex '>
-            <Card.Title className='p-1'>ID: </Card.Title>
-            <Card.Text className='p-1'> {loggedInUser.id}</Card.Text>
-          </Card.Body>
-        </Card>
+        <Card.Body className="d-flex ">
+          <Card.Title className="p-1">ID: </Card.Title>
+          <Card.Text className="p-1"> {loggedInUser.id}</Card.Text>
+        </Card.Body>
+      </Card>
 
-      {nameEditing ? (
+      {nameSurnamEditing ? (
         <Card>
           <Card.Body>
             <Form.Group className="mb-3 ">
               <Form.Control
                 type="text"
-                onChange={(e) => setNameEditingText(e.target.value)}
-                value={nameEditingText}
+                onChange={(e) =>
+                  setNameSurnameEditingData({
+                    ...nameSurnameEditingData,
+                    name: e.target.value,
+                  })
+                }
+                value={nameSurnameEditingData.name}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3 ">
+              <Form.Control
+                type="text"
+                onChange={(e) =>
+                  setNameSurnameEditingData({
+                    ...nameSurnameEditingData,
+                    surname: e.target.value,
+                  })
+                }
+                value={nameSurnameEditingData.surname}
               />
             </Form.Group>
             <Button
               variant="primary"
-              onClick={() => editName()}
+              onClick={() => editNameSurname()}
               className="w-100"
             >
               Submit
@@ -197,47 +221,14 @@ export default function OnlyPersonalInfo() {
           <Card.Body>
             <Card.Title>Name:</Card.Title>
             <Card.Text> {loggedInUser.name}</Card.Text>
-            <Button
-              variant="info"
-              onClick={() => setNameEditing(true)}
-              className="w-100"
-            >
-              Edit Name
-            </Button>
-          </Card.Body>
-        </Card>
-      )}
-
-      {surnameEditing ? (
-        <Card>
-          <Card.Body>
-            <Form.Group className="mb-3 ">
-              <Form.Control
-                type="text"
-                onChange={(e) => setSurnameEditingText(e.target.value)}
-                value={surnameEditingText}
-              />
-            </Form.Group>
-            <Button
-              variant="primary"
-              onClick={() => editSurname()}
-              className="w-100"
-            >
-              Submit
-            </Button>
-          </Card.Body>
-        </Card>
-      ) : (
-        <Card>
-          <Card.Body>
-            <Card.Title>Surame:</Card.Title>
+            <Card.Title>Surname:</Card.Title>
             <Card.Text> {loggedInUser.surname}</Card.Text>
             <Button
               variant="info"
-              onClick={() => setSurnameEditing(true)}
+              onClick={() => setNameSurnameEditing(true)}
               className="w-100"
             >
-              Edit Surname
+              Edit Name & Surname
             </Button>
           </Card.Body>
         </Card>
@@ -395,7 +386,7 @@ export default function OnlyPersonalInfo() {
         </Card>
       )}
 
-{birthGenderEditing ? (
+      {birthGenderEditing ? (
         <Card>
           <Card.Body>
             <Form.Group className="mb-3 ">
@@ -448,17 +439,6 @@ export default function OnlyPersonalInfo() {
           </Card.Body>
         </Card>
       )}
-      <div style={{ border: "1px solid grey" }}>
-        {loggedInUser.actions.map((action, i) => {
-          return (
-            <div key={i} style={{ border: "1px solid pink" }}>
-              <p>{action.id}</p>
-              <p>{action.what}</p>
-              <p>{action.when}</p>
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 }

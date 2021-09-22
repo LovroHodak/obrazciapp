@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button } from "react-bootstrap";
 
 import "./Register.css";
 import { useUsers } from "../../hooks/use-users";
@@ -10,19 +10,29 @@ export default function Register() {
   let history = useHistory();
   // hooks
   const { users, addNewUser } = useUsers();
-  // 1) states - input
+
+  // STATES
+  // states - input
   const [namee, setNamee] = useState("");
   const [emaill, setEmaill] = useState("");
   const [passwordd, setPasswordd] = useState("");
-  // 2) states
+  // states - warnings
   const [borderColorUsername, setBorderColorUsername] = useState(
     "border border-primary"
   );
-  const [borderColorEmail, setBorderColorEmail] = useState("border border-primary");
-  const [warningUsername, setWarningUsername] = useState(
-    false
+  const [borderColorEmail, setBorderColorEmail] = useState(
+    "border border-primary"
   );
+  const [warningUsername, setWarningUsername] = useState(false);
   const [warningEmail, setWarningEmail] = useState(false);
+
+  // new OBJECT
+  const newUser = {
+    id: users.length + 1,
+    name: namee,
+    email: emaill,
+    password: passwordd,
+  };
 
   // FUNCTIONS
   // inputs function - handler
@@ -35,40 +45,31 @@ export default function Register() {
   const updatePasswordd = (e) => {
     setPasswordd(e.target.value);
   };
-  // on spot - new obj
-  const newUser = {
-    id: users.length + 1,
-    name: namee,
-    email: emaill,
-    password: passwordd,
-  };
-  // helper function
+  // helper function - validation
   const registerStatus = () => {
     const emailAlreadyExists = users.find((user) => user.email === emaill);
-    const nameAlreadyExists = users.find(
-      (user) => user.name === namee
-    );
+    const nameAlreadyExists = users.find((user) => user.name === namee);
 
     if (emailAlreadyExists && nameAlreadyExists) {
       setBorderColorEmail("border border-danger");
       setBorderColorUsername("border border-danger");
-      setWarningUsername(true)
-      setWarningEmail(true)
+      setWarningUsername(true);
+      setWarningEmail(true);
       setEmaill("");
       setNamee("");
       setPasswordd("");
     } else if (nameAlreadyExists) {
       setBorderColorUsername("border border-danger");
-      setBorderColorEmail("border border-primary")
-      setWarningUsername(true)
-      setWarningEmail(false)
+      setBorderColorEmail("border border-primary");
+      setWarningUsername(true);
+      setWarningEmail(false);
       setNamee("");
       setPasswordd("");
     } else if (emailAlreadyExists) {
       setBorderColorEmail("border border-danger");
       setBorderColorUsername("border border-primary");
-      setWarningEmail(true)
-      setWarningUsername(false)
+      setWarningEmail(true);
+      setWarningUsername(false);
       setEmaill("");
       setPasswordd("");
     } else {
@@ -83,7 +84,6 @@ export default function Register() {
   const addUser = (e) => {
     e.preventDefault();
     registerStatus();
-
   };
 
   return (
@@ -101,12 +101,14 @@ export default function Register() {
             value={namee}
             required
           />
-          {warningUsername ? (<Form.Text className="text-muted">
-            Username is already taken.
-          </Form.Text>) : (<></>)}
-          
+          {warningUsername ? (
+            <Form.Text className="text-muted">
+              Username is already taken.
+            </Form.Text>
+          ) : (
+            <></>
+          )}
         </Form.Group>
-
         <Form.Group className="mb-3 " controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -118,15 +120,18 @@ export default function Register() {
             value={emaill}
             required
           />
-          {warningEmail ? (<Form.Text className="text-muted">
-            Email is already taken.
-          </Form.Text>) : (<></>)}
+          {warningEmail ? (
+            <Form.Text className="text-muted">
+              Email is already taken.
+            </Form.Text>
+          ) : (
+            <></>
+          )}
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-          className="border border-primary"
+            className="border border-primary"
             type="password"
             placeholder="Password"
             onChange={updatePasswordd}
@@ -139,9 +144,11 @@ export default function Register() {
           <Button variant="primary" type="submit" className="m-1">
             Submit
           </Button>
-          <Link to='/'><Button variant="warning" className="m-1">
-            Go to Login
-          </Button></Link>
+          <Link to="/">
+            <Button variant="warning" className="m-1">
+              Go to Login
+            </Button>
+          </Link>
         </div>
       </Form>
       <div>

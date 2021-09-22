@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Card, Button, ListGroup } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
@@ -20,7 +19,9 @@ export default function PersonalInfo() {
             <ListGroup.Item>ID: {personalInfoOnce.id}</ListGroup.Item>
             <ListGroup.Item>Name: {personalInfoOnce.name}</ListGroup.Item>
             <ListGroup.Item>Email: {personalInfoOnce.email}</ListGroup.Item>
-            <ListGroup.Item>Password: {personalInfoOnce.password}</ListGroup.Item>
+            <ListGroup.Item>
+              Password: {personalInfoOnce.password}
+            </ListGroup.Item>
             <Card.Header className="bg-secondary text-light">
               Data added at Personal Info
             </Card.Header>
@@ -37,7 +38,9 @@ export default function PersonalInfo() {
             <ListGroup.Item>
               Post number: {personalInfoOnce.address.postNr}
             </ListGroup.Item>
-            <ListGroup.Item>City: {personalInfoOnce.address.city}</ListGroup.Item>
+            <ListGroup.Item>
+              City: {personalInfoOnce.address.city}
+            </ListGroup.Item>
             <ListGroup.Item>
               Country: {personalInfoOnce.address.country}
             </ListGroup.Item>

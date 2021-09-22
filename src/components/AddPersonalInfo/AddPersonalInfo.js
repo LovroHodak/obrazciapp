@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Button, Card, ListGroup } from 'react-bootstrap'
+import { Form, Button, Card, ListGroup } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
 
@@ -13,8 +13,10 @@ export default function AddPersonalInfo() {
     updateAllUsers,
     updateLoggedInUser,
     personalInfoOnce,
-        updatePersonalInfoOnce
+    updatePersonalInfoOnce,
   } = useUsers();
+
+  // STATES
   // states - input
   const [surnamee, setSurnamee] = useState("");
   const [streett, setStreett] = useState("");
@@ -24,6 +26,7 @@ export default function AddPersonalInfo() {
   const [countryy, setCountryy] = useState("");
   const [birthDayy, setBirthDayy] = useState("");
   const [genderr, setGenderr] = useState("");
+
   // FUNCTIONS
   // inputs function - handler
   const updateSurnamee = (e) => {
@@ -50,7 +53,7 @@ export default function AddPersonalInfo() {
   const updateGenderr = (e) => {
     setGenderr(e.target.value);
   };
-  // helper function (for state - personalInfoData)
+  // helper functions
   // (for state - loggedInUser)
   const updatedUser = {
     ...loggedInUser,
@@ -69,11 +72,17 @@ export default function AddPersonalInfo() {
         id: new Date().getTime(),
         what: "Added personal info",
         when: new Date().toString().slice(0, 24),
+
+        /* name: 'empty',
+        grade: 'empty',
+        change: {first: 'empty', second: 'empty'},
+        oldData: {first: 'empty', second: 'empty'},
+        propNames: {first: 'empty', second: 'empty'} */
       },
     ],
     exams: [],
   };
-
+  // (for state - personalInfoData)
   const updatedUserOnce = {
     ...personalInfoOnce,
     surname: surnamee,
@@ -91,19 +100,23 @@ export default function AddPersonalInfo() {
         id: new Date().getTime(),
         what: "Added personal info",
         when: new Date().toString().slice(0, 24),
+      
+        /* name: 'empty',
+        grade: 'empty',
+        change: {first: 'empty', second: 'empty'},
+        oldData: {first: 'empty', second: 'empty'},
+        propNames: {first: 'empty', second: 'empty'} */
       },
     ],
     exams: [],
   };
-
   // main function - submit
   const addMyPersonalInfo = (e) => {
     e.preventDefault();
 
-    updateAllUsers(loggedInUser);
-    console.log(loggedInUser)
+    updateAllUsers(updatedUser);
     updateLoggedInUser(updatedUser);
-    updatePersonalInfoOnce(updatedUserOnce)
+    updatePersonalInfoOnce(updatedUserOnce);
 
     setSurnamee("");
     setStreett("");
@@ -115,14 +128,13 @@ export default function AddPersonalInfo() {
     setGenderr("");
 
     console.log(updatedUser);
-
     history.push("/home");
   };
 
   return (
-    <div className='d-flex flex-column justify-content-center align-items-center p-1'>
+    <div className="d-flex flex-column justify-content-center align-items-center p-1">
       <h2>Data added at Register</h2>
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: "18rem" }}>
         <ListGroup variant="flush">
           <ListGroup.Item>ID: {loggedInUser.id}</ListGroup.Item>
           <ListGroup.Item>Name: {loggedInUser.name}</ListGroup.Item>

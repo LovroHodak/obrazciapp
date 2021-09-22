@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
 
 export default function AddExams() {
+    // history
+    let history = useHistory();
   // hooks
   const { users, loggedInUser, updateAllUsers } = useUsers();
   // state - input
@@ -20,12 +22,7 @@ export default function AddExams() {
     setExamGrade(e.target.value);
   };
   // helper functions
-  const updatedUsers = users.map((user) => {
-    if (user.id === loggedInUser.id) {
-      return loggedInUser;
-    }
-    return user;
-  });
+  
 
   // main function - submit
   const addNewExam = (e) => {
@@ -33,11 +30,16 @@ export default function AddExams() {
     // push properties
     loggedInUser.actions.push({
       id: new Date().getTime(),
-      what: "added new exam",
+      what: "Added new exam",
       when: new Date().toString().slice(0, 24),
-      name: examName,
+      examNamee: examName,
+      examGradee: examGrade
+      
+      /* name: examName,
       grade: examGrade,
-      change: 'Exams'
+      change: {first: 'empty', second: 'empty'},
+      oldData: {first: 'empty', second: 'empty'},
+      propNames: {first: 'empty', second: 'empty'} */
     });
     loggedInUser.exams.push({
       name: examName,
@@ -48,6 +50,8 @@ export default function AddExams() {
     updateAllUsers(loggedInUser);
     setExamName("");
     setExamGrade("");
+
+    history.push("/home");
 
     console.log(loggedInUser);
   };
