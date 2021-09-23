@@ -4,13 +4,25 @@ import { Link } from "react-router-dom";
 
 import { useUsers } from "../../hooks/use-users";
 
+/* What is happening?
+V drugem useEffectu nastimam state (actionIdNow).
+In potem bi hotu iz tega state-a (actionIdNow) 
+nastimat nov state (gradeEditText).
+Mi pa tega ne pusti ker (actionIdNow)  se ni naloadan.
+Jst sem ziher da lahko to zrihtam z useEffectom sam kako pa res vec ne vem.
+Torej kako nej bi izgledal kaj si zelim je: 
+
+setGradeEditText({
+  name: actionIdNow.examNamee,
+  grade: actionIdNow.examGradee
+})  */
+
 export default function EditExam(props) {
   // hooks
-  const { loggedInUser, updateAllUsers, users, setLoggedInUser } = useUsers();
+  const { loggedInUser, updateAllUsers } = useUsers();
 
   const [actionIdNow, setActionIdNow] = useState(null);
   const [examFoundIt, setExamFoundIt] = useState(null);
-  
 
   const [fixed, setFixed] = useState({});
 
@@ -31,7 +43,6 @@ export default function EditExam(props) {
     setExamFoundIt(findExam);
 
     console.log("log efect", loggedInUser);
-
     console.log("findIt efect", findIt);
   }, []);
 
@@ -47,12 +58,15 @@ export default function EditExam(props) {
 
   /* 
 --------------------------------------------------FIX ITTTTTTTTTTTT
+ i want line 43 and 44 to look like this: 
 
 name: actionIdNow.examNamee,
 grade: actionIdNow.examGradee
 
-name: loggedInUser.exams[0].name,
-    grade: loggedInUser.exams[0].grade,
+but it wont allow me because data is still loading. 
+Is there a way to use useEffect or smt?
+
+
  */
   function edit() {
     actionIdNow.examNamee = gradeEditText.name;
