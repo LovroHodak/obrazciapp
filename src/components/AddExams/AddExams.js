@@ -5,10 +5,10 @@ import { Form, Button, Card } from "react-bootstrap";
 import { useUsers } from "../../hooks/use-users";
 
 export default function AddExams() {
-    // history
-    let history = useHistory();
+  // history
+  let history = useHistory();
   // hooks
-  const { users, loggedInUser, updateAllUsers } = useUsers();
+  const { users, loggedInUser, updateAllUsers, personalInfoOnce } = useUsers();
   // state - input
   const [examName, setExamName] = useState("");
   const [examGrade, setExamGrade] = useState("");
@@ -31,7 +31,7 @@ export default function AddExams() {
       what: "Added new exam",
       when: new Date().toString().slice(0, 24),
       examNamee: examName,
-      examGradee: examGrade
+      examGradee: examGrade,
     });
     loggedInUser.exams.push({
       name: examName,
@@ -39,6 +39,17 @@ export default function AddExams() {
       id: new Date().getTime(),
       when: new Date().toString().slice(0, 24),
     });
+
+    personalInfoOnce.actions.push({
+      id: new Date().getTime(),
+      what: "Added new exam",
+      when: new Date().toString().slice(0, 24),
+      examNamee: examName,
+      examGradee: examGrade,
+    });
+
+    
+
     updateAllUsers(loggedInUser);
     setExamName("");
     setExamGrade("");
@@ -48,7 +59,7 @@ export default function AddExams() {
     console.log(loggedInUser);
   };
   return (
-    <div className='d-flex flex-column justify-content-center align-items-center p-1'>
+    <div className="d-flex flex-column justify-content-center align-items-center p-1">
       <h1>AddExams</h1>
       <Form onSubmit={addNewExam} style={{ maxWidth: 500 }}>
         <Form.Group className="mb-3 " controlId="formBasicEmail">

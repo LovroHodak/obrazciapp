@@ -83,4 +83,13 @@ b) dej conditional renderinge v funkcijo in v state
 
 
 
-Grade editing
+EditExam.js
+1. line 37-40
+const [gradeEditText, setGradeEditText] = useState({
+    name: loggedInUser.exams[0].name,
+    grade: loggedInUser.exams[0].grade,
+  });
+2. line 61-62
+loggedInUser.exams[0].name = actionIdNow.examNamee
+    loggedInUser.exams[0].grade = actionIdNow.examGradee
+

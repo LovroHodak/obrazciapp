@@ -45,12 +45,12 @@ export default function FeedChangesDetail(props) {
             {actionIdNow.what}
           </Card.Header>
 
-          {actionIdNow.examNamee ? (
-         
-              <Card.Text className='m-3'>
-                {actionIdNow.examNamee}: {actionIdNow.examGradee}{" "}
-              </Card.Text>
-              
+          {actionIdNow.oldName ? (
+            <Card.Text>
+              Changed exam name from {actionIdNow.oldName} to{" "}
+              {actionIdNow.newName} and grade from {actionIdNow.oldGrade} to{" "}
+              {actionIdNow.newGrade}.
+            </Card.Text>
           ) : (
             <></>
           )}

@@ -24,10 +24,13 @@ export function UsersProvider(props) {
 
   const [personalInfoOnce, setPersonalInfoOnce] = useState(getFromLocalStorage)
 
+
   React.useEffect(() => {
     localStorage.setItem("loggedInUserr", JSON.stringify(loggedInUser));
     localStorage.setItem("personalInfoOnceee", JSON.stringify(personalInfoOnce));
   }, [loggedInUser, personalInfoOnce]);
+
+
 
   // functions with setters for states
   // users
@@ -87,7 +90,7 @@ export function UsersProvider(props) {
         logMeOut,
 
         personalInfoOnce,
-        updatePersonalInfoOnce
+        updatePersonalInfoOnce,
       }}
     >
       {props.children}

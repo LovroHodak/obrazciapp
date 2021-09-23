@@ -56,18 +56,28 @@ export default function Home() {
             .map((action, i) => {
               return (
                 <div key={i}>
-                  {action.what === "Added personal info" ? (
-                    <Link to="/personalInfo">
+                  {action.what === "Added new exam" ? (
+                    <Link to={`/onlyExams/${action.id}`}>
                       <h5>
                         {i + 1}. {action.what}, {action.when}
                       </h5>
                     </Link>
                   ) : (
-                    <Link to={`/feedChangesDetail/${action.id}`}>
-                      <h5>
-                        {i + 1}. {action.what}, {action.when}
-                      </h5>
-                    </Link>
+                    <div>
+                      {action.what === "Added personal info" ? (
+                        <Link to="/personalInfo">
+                          <h5>
+                            {i + 1}. {action.what}, {action.when}
+                          </h5>
+                        </Link>
+                      ) : (
+                        <Link to={`/feedChangesDetail/${action.id}`}>
+                          <h5>
+                            {i + 1}. {action.what}, {action.when}
+                          </h5>
+                        </Link>
+                      )}
+                    </div>
                   )}
                 </div>
               );

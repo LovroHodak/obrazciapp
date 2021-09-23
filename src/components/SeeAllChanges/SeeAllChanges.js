@@ -68,6 +68,16 @@ export default function SeeAllChanges() {
                   ) : (
                     <></>
                   )}
+
+                  {action.oldName ? (
+                    <ListGroup.Item>
+                      Changed exam name from {action.oldName} to{" "}
+                      {action.newName} and grade from {action.oldGrade} to{" "}
+                      {action.newGrade}.
+                    </ListGroup.Item>
+                  ) : (
+                    <></>
+                  )}
                   {action.userNamee ? (
                     <ListGroup.Item>
                       Changed name from {action.oldUserNamee} to{" "}
@@ -99,11 +109,11 @@ export default function SeeAllChanges() {
                     <ListGroup.Item>
                       Changed street from {action.oldUserStreett} to{" "}
                       {action.userStreett}, street number from{" "}
-                      {action.oldUserNumberr} to {action.userNumberr}, city from
+                      {action.oldUserNumberr} to {action.userNumberr}, city from{" "}
                       {action.oldUserCityy} to {action.userCityy}, post number
                       from {action.oldUserPostNrr} to {action.userPostNrr} and
-                      country from
-                      {action.oldUserCountryy} to {action.userCountryy}.
+                      country from {action.oldUserCountryy} to{" "}
+                      {action.userCountryy}.
                     </ListGroup.Item>
                   ) : (
                     <></>

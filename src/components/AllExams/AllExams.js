@@ -17,7 +17,7 @@ export default function AllExams() {
 
             {loggedInUser.exams.map((exam, i) => {
               return (
-                <ListGroup variant="flush">
+                <ListGroup variant="flush" key={i}>
                   <Card.Header className="bg-secondary text-light">
                   {exam.name}: {exam.grade}
                   </Card.Header>

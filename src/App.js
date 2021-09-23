@@ -17,6 +17,7 @@ import InfoOnTime from "./components/InfoOnTime/InfoOnTime";
 import AllExams from "./components/AllExams/AllExams";
 import Index from "./components/Index/Index";
 import EditExam from "./components/EditExam/EditExam";
+import OnlyExams from "./components/OnlyExams/OnlyExams";
 
 function App() {
   return (
@@ -101,6 +102,13 @@ function App() {
               path="/feedChangesDetail/:id"
               render={(routeProps) => {
                 return <FeedChangesDetail {...routeProps} />;
+              }}
+            />
+            <Route
+              exact
+              path="/onlyExams/:id"
+              render={(routeProps) => {
+                return <OnlyExams {...routeProps} />;
               }}
             />
 
