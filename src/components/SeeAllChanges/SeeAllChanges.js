@@ -61,14 +61,19 @@ export default function SeeAllChanges() {
                     <></>
                   )}
 
-                  {action.examNamee ? (
-                    <ListGroup.Item>
-                      {action.examNamee}: {action.examGradee}{" "}
-                    </ListGroup.Item>
-                  ) : (
-                    <></>
-                  )}
+                  {action.what === "Added new exam" ? (
+                    <div>
+                      {personalInfoOnce.actions.map((act, i) => {
+                        if (act.id === action.id){
+                          return (<ListGroup.Item key={i}>
+                            {act.examNamee}: {act.examGradee}
+                          </ListGroup.Item>)
+                        }
+                      })}
+                    </div>
+                  ): (<></>)}
 
+                 
                   {action.oldName ? (
                     <ListGroup.Item>
                       Changed exam name from {action.oldName} to{" "}

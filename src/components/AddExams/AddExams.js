@@ -25,6 +25,7 @@ export default function AddExams() {
   // main function - submit
   const addNewExam = (e) => {
     e.preventDefault();
+
     // push properties
     loggedInUser.actions.push({
       id: new Date().getTime(),
@@ -47,6 +48,7 @@ export default function AddExams() {
       examNamee: examName,
       examGradee: examGrade,
     });
+
 
     
 

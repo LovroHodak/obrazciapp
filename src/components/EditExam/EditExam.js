@@ -9,6 +9,8 @@ export default function EditExam(props) {
   const { loggedInUser, updateAllUsers, users, setLoggedInUser } = useUsers();
 
   const [actionIdNow, setActionIdNow] = useState(null);
+  const [examFoundIt, setExamFoundIt] = useState(null);
+  
 
   const [fixed, setFixed] = useState({});
 
@@ -23,7 +25,10 @@ export default function EditExam(props) {
     let changeToNum = Number(myId);
     let findIt = loggedInUser.actions.find((act) => act.id === changeToNum);
 
+    let findExam = loggedInUser.exams.find((act) => act.id === changeToNum);
+
     setActionIdNow(findIt);
+    setExamFoundIt(findExam);
 
     console.log("log efect", loggedInUser);
 
@@ -31,6 +36,7 @@ export default function EditExam(props) {
   }, []);
 
   console.log("actionIdNow", actionIdNow);
+  console.log("examFoundIt", examFoundIt);
   console.log("logggggg", loggedInUser);
 
   const [gradeEdit, setGradeEdit] = useState(false);
@@ -38,16 +44,20 @@ export default function EditExam(props) {
     name: loggedInUser.exams[0].name,
     grade: loggedInUser.exams[0].grade,
   });
-  
-/* 
+
+  /* 
 --------------------------------------------------FIX ITTTTTTTTTTTT
+
+name: actionIdNow.examNamee,
+grade: actionIdNow.examGradee
+
 name: loggedInUser.exams[0].name,
     grade: loggedInUser.exams[0].grade,
  */
   function edit() {
     actionIdNow.examNamee = gradeEditText.name;
     actionIdNow.examGradee = gradeEditText.grade;
-    
+
     loggedInUser.actions.push({
       id: new Date().getTime(),
       what: "Edited exam",
@@ -55,15 +65,18 @@ name: loggedInUser.exams[0].name,
       oldName: fixed.exams[0].name,
       newName: actionIdNow.examNamee,
       oldGrade: fixed.exams[0].grade,
-      newGrade: actionIdNow.examGradee
+      newGrade: actionIdNow.examGradee,
     });
 
-    loggedInUser.exams[0].name = actionIdNow.examNamee
-    loggedInUser.exams[0].grade = actionIdNow.examGradee
+    examFoundIt.name = actionIdNow.examNamee;
+    examFoundIt.grade = actionIdNow.examGradee;
 
     setGradeEdit(false);
     updateAllUsers(loggedInUser);
-    setGradeEditText({name: actionIdNow.examNamee, grade: actionIdNow.examGradee})
+    setGradeEditText({
+      name: actionIdNow.examNamee,
+      grade: actionIdNow.examGradee,
+    });
   }
 
   return (
