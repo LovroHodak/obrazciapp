@@ -29,8 +29,12 @@ export default function EditExam(props) {
   useEffect(() => {
     let imutableData = JSON.parse(JSON.stringify(loggedInUser));
     setFixed(imutableData);
-    console.log(imutableData);
+    //console.log(imutableData);
+    console.log('fixed exams', fixed.exams)
   }, []);
+
+  // on unmount
+  //useEffect( () => setFixed(null), [] );
 
   useEffect(() => {
     let myId = props.match.params.id;
@@ -42,19 +46,38 @@ export default function EditExam(props) {
     setActionIdNow(findIt);
     setExamFoundIt(findExam);
 
-    console.log("log efect", loggedInUser);
-    console.log("findIt efect", findIt);
+    //console.log("log efect", loggedInUser);
+    //console.log("findIt efect", findIt);
   }, []);
 
-  console.log("actionIdNow", actionIdNow);
-  console.log("examFoundIt", examFoundIt);
-  console.log("logggggg", loggedInUser);
+  useEffect(() => {
+    // preveri, ali ima actionIdNow ze vrednost
+    
+    if (actionIdNow) {
+      setGradeEditText({
+        name: actionIdNow.examNamee,
+        grade: actionIdNow.examGradee
+      })
+    }
+    
+  }, [actionIdNow])
+
+  //test
+  useEffect(() => {
+    // preveri, ali ima actionIdNow ze vrednost
+    
+    if (fixed) {
+      console.log('fixed exams test', fixed.exams)
+    }
+    
+  }, [fixed])
+
+  //console.log("actionIdNow", actionIdNow);
+  //console.log("examFoundIt", examFoundIt);
+  //console.log("logggggg", loggedInUser);
 
   const [gradeEdit, setGradeEdit] = useState(false);
-  const [gradeEditText, setGradeEditText] = useState({
-    name: loggedInUser.exams[0].name,
-    grade: loggedInUser.exams[0].grade,
-  });
+  const [gradeEditText, setGradeEditText] = useState(null);
 
   /* 
 --------------------------------------------------FIX ITTTTTTTTTTTT
@@ -68,7 +91,10 @@ Is there a way to use useEffect or smt?
 
 
  */
+
+
   function edit() {
+  
     actionIdNow.examNamee = gradeEditText.name;
     actionIdNow.examGradee = gradeEditText.grade;
 
@@ -91,6 +117,9 @@ Is there a way to use useEffect or smt?
       name: actionIdNow.examNamee,
       grade: actionIdNow.examGradee,
     });
+
+    
+    console.log('fixed exams on edit', fixed.exams)
   }
 
   return (

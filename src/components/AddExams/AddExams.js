@@ -33,12 +33,13 @@ export default function AddExams() {
       when: new Date().toString().slice(0, 24),
       examNamee: examName,
       examGradee: examGrade,
+      
     });
     loggedInUser.exams.push({
       name: examName,
       grade: examGrade,
       id: new Date().getTime(),
-      when: new Date().toString().slice(0, 24),
+      when: new Date().toString().slice(0, 24)
     });
 
     personalInfoOnce.actions.push({
