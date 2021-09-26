@@ -1,100 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Card, ListGroup, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Form, Button, Card } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";
-
-/* What is happening?
-V drugem useEffectu nastimam state (actionIdNow).
-In potem bi hotu iz tega state-a (actionIdNow) 
-nastimat nov state (gradeEditText).
-Mi pa tega ne pusti ker (actionIdNow)  se ni naloadan.
-Jst sem ziher da lahko to zrihtam z useEffectom sam kako pa res vec ne vem.
-Torej kako nej bi izgledal kaj si zelim je: 
-
-setGradeEditText({
-  name: actionIdNow.examNamee,
-  grade: actionIdNow.examGradee
-})  */
 
 export default function EditExam(props) {
   // hooks
   const { loggedInUser, updateAllUsers } = useUsers();
 
+  // STATES
   const [actionIdNow, setActionIdNow] = useState(null);
   const [examFoundIt, setExamFoundIt] = useState(null);
-
-  const [fixed, setFixed] = useState({});
-
-  useEffect(() => {
-    let imutableData = JSON.parse(JSON.stringify(loggedInUser));
-    setFixed(imutableData);
-    //console.log(imutableData);
-    console.log('fixed exams', fixed.exams)
-  }, []);
-
-  // on unmount
-  //useEffect( () => setFixed(null), [] );
+  // states - input
+  const [gradeEdit, setGradeEdit] = useState(false);
+  const [gradeEditText, setGradeEditText] = useState(null);
 
   useEffect(() => {
     let myId = props.match.params.id;
     let changeToNum = Number(myId);
-    let findIt = loggedInUser.actions.find((act) => act.id === changeToNum);
 
+    let findIt = loggedInUser.actions.find((act) => act.id === changeToNum);
     let findExam = loggedInUser.exams.find((act) => act.id === changeToNum);
 
     setActionIdNow(findIt);
     setExamFoundIt(findExam);
-
-    //console.log("log efect", loggedInUser);
-    //console.log("findIt efect", findIt);
   }, []);
 
   useEffect(() => {
     // preveri, ali ima actionIdNow ze vrednost
-    
     if (actionIdNow) {
       setGradeEditText({
         name: actionIdNow.examNamee,
-        grade: actionIdNow.examGradee
-      })
+        grade: actionIdNow.examGradee,
+      });
     }
-    
-  }, [actionIdNow])
+  }, [actionIdNow]);
 
-  //test
-  useEffect(() => {
-    // preveri, ali ima actionIdNow ze vrednost
-    
-    if (fixed) {
-      console.log('fixed exams test', fixed.exams)
-    }
-    
-  }, [fixed])
-
-  //console.log("actionIdNow", actionIdNow);
-  //console.log("examFoundIt", examFoundIt);
-  //console.log("logggggg", loggedInUser);
-
-  const [gradeEdit, setGradeEdit] = useState(false);
-  const [gradeEditText, setGradeEditText] = useState(null);
-
-  /* 
---------------------------------------------------FIX ITTTTTTTTTTTT
- i want line 43 and 44 to look like this: 
-
-name: actionIdNow.examNamee,
-grade: actionIdNow.examGradee
-
-but it wont allow me because data is still loading. 
-Is there a way to use useEffect or smt?
-
-
- */
-
-
+  // FUNCTIONS
   function edit() {
-  
     actionIdNow.examNamee = gradeEditText.name;
     actionIdNow.examGradee = gradeEditText.grade;
 
@@ -102,9 +44,9 @@ Is there a way to use useEffect or smt?
       id: new Date().getTime(),
       what: "Edited exam",
       when: new Date().toString().slice(0, 24),
-      oldName: fixed.exams[0].name,
+      oldName: examFoundIt.name,
       newName: actionIdNow.examNamee,
-      oldGrade: fixed.exams[0].grade,
+      oldGrade: examFoundIt.grade,
       newGrade: actionIdNow.examGradee,
     });
 
@@ -117,9 +59,6 @@ Is there a way to use useEffect or smt?
       name: actionIdNow.examNamee,
       grade: actionIdNow.examGradee,
     });
-
-    
-    console.log('fixed exams on edit', fixed.exams)
   }
 
   return (
@@ -127,38 +66,59 @@ Is there a way to use useEffect or smt?
       {actionIdNow ? (
         <div>
           {gradeEdit ? (
-            <div>
-              <form>
-                <input
-                  type="text"
-                  onChange={(e) =>
-                    setGradeEditText({
-                      ...gradeEditText,
-                      name: e.target.value,
-                    })
-                  }
-                  value={gradeEditText.name}
-                />
-                <input
-                  type="text"
-                  onChange={(e) =>
-                    setGradeEditText({
-                      ...gradeEditText,
-                      grade: e.target.value,
-                    })
-                  }
-                  value={gradeEditText.grade}
-                />
-              </form>
-              <button onClick={() => edit()}>close form</button>
-            </div>
+            <Card>
+              <Card.Body>
+                <Form.Group className="mb-3 ">
+                  <Form.Control
+                    type="text"
+                    onChange={(e) =>
+                      setGradeEditText({
+                        ...gradeEditText,
+                        name: e.target.value,
+                      })
+                    }
+                    value={gradeEditText.name}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3 ">
+                  <Form.Control
+                    type="text"
+                    onChange={(e) =>
+                      setGradeEditText({
+                        ...gradeEditText,
+                        grade: e.target.value,
+                      })
+                    }
+                    value={gradeEditText.grade}
+                  />
+                </Form.Group>
+                <Button
+                  variant="primary"
+                  onClick={() => edit()}
+                  className="w-100"
+                >
+                  Submit
+                </Button>
+              </Card.Body>
+            </Card>
           ) : (
-            <div>
-              <p>actionIdNow.id{actionIdNow.id}</p>
-              <p>actionIdNow.examNamee: {actionIdNow.examNamee}</p>
-              <p>actionIdNow.examGradee: {actionIdNow.examGradee}</p>
-              <button onClick={() => setGradeEdit(true)}>Open form</button>
-            </div>
+            <Card>
+              <Card.Body>
+                <Card.Title>Action ID:</Card.Title>
+                <Card.Text> {actionIdNow.id}</Card.Text>
+                <Card.Title>Exam name:</Card.Title>
+                <Card.Text> {actionIdNow.examNamee}</Card.Text>
+                <Card.Title>Exam grade:</Card.Title>
+                <Card.Text> {actionIdNow.examGradee}</Card.Text>
+                <Button
+                  variant="info"
+                  onClick={() => setGradeEdit(true)}
+                  className="w-100"
+                >
+                  Edit Name & Grade
+                </Button>
+              </Card.Body>
+            </Card>
           )}
         </div>
       ) : (
@@ -166,22 +126,6 @@ Is there a way to use useEffect or smt?
           <p>Still loading</p>
         </div>
       )}
-
-      {/* {gradeEdit ? (
-        <div>
-          <form>
-              <input value={gradeEditText.examGradee} />
-          </form>
-          <button  onClick={() => setGradeEdit(false)}>close form</button>
-        </div>
-      ) : (
-        <div>
-          <p>actionIdNow.id{actionIdNow.id}</p>
-          <p>actionIdNow.examNamee: {actionIdNow.examNamee}</p>
-          <p>actionIdNow.examGradee: {actionIdNow.examGradee}</p>
-          <button onClick={() => setGradeEdit(true)}>Open form</button>
-        </div>
-      )} */}
     </div>
   );
 }
