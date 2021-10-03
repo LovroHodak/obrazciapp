@@ -25,6 +25,16 @@ export default function Login() {
   const [warningEmail, setWarningEmail] = useState(false);
   const [warningPassword, setWarningPassword] = useState(false);
 
+  const [passType, setPassType] = useState('password')
+
+  function viewPassword() {
+    if(passType === 'password'){
+      setPassType('text')
+    } else {
+      setPassType('password')
+    }
+  }
+
   // FUNCTIONS
   // inputs function - handler
   const updateEmaill = (e) => {
@@ -110,13 +120,13 @@ export default function Login() {
           <Form.Label>Password</Form.Label>
           <Form.Control
             className={borderColorPassword}
-            type="password"
+            type={passType}
             placeholder="Password"
             onChange={updatePasswordd}
             name="passwordd"
             value={passwordd}
             required
-          />
+          /><Button onClick={viewPassword}>View password</Button>
           {warningPassword ? (
             <Form.Text className="text-muted">Wrong password.</Form.Text>
           ) : (

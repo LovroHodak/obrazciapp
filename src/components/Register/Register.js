@@ -26,6 +26,16 @@ export default function Register() {
   const [warningUsername, setWarningUsername] = useState(false);
   const [warningEmail, setWarningEmail] = useState(false);
 
+  const [passType, setPassType] = useState('password')
+
+  function viewPassword() {
+    if(passType === 'password'){
+      setPassType('text')
+    } else {
+      setPassType('password')
+    }
+  }
+
   // new OBJECT
   const newUser = {
     id: users.length + 1,
@@ -138,7 +148,7 @@ export default function Register() {
             name="passwordd"
             value={passwordd}
             required
-          />
+          /><Button onClick={viewPassword}>View password</Button>
         </Form.Group>
         <div className="d-flex flex-column align-items-center ">
           <Button variant="primary" type="submit" className="m-1">

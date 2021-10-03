@@ -20,7 +20,7 @@ Problems:
 1. GLOBAL - ko me pelje na drugo stran naj mi zmeraj prikazuje stran od vrha (npr ko se doda navbar mi ostane le ta skrit in moram poskrolat do vrha, jst pa hocem da gre iz vrha po defaultu)
 
 2. REGISTER.js - validation: email - must include @, password: must be at least 8 caracters long ect.
-2. REGISTER.js - view password button
+2. REGISTER.js, LOGIN.js - style view password button
 
 3. FIXED (-- !!! --) LOGIN.js - ce uporabnik ze obstaja naj ga poslje na HOME.js
 
