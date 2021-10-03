@@ -22,7 +22,7 @@ Problems:
 2. REGISTER.js - validation: email - must include @, password: must be at least 8 caracters long ect.
 2. REGISTER.js - view password button
 
-3. LOGIN.js - ce uporabnik ze obstaja naj ga poslje na HOME.js
+3. FIXED (-- !!! --) LOGIN.js - ce uporabnik ze obstaja naj ga poslje na HOME.js
 
 4. ADDPERSONALINFO.js - country: ISO, birthday: calendar, gender: 3 options
 4. ADDPERSONALINFO.js - ali lahko naredim dinamicne state in funkcije, glede na to da se vse ponavlja?

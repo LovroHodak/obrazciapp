@@ -41,13 +41,13 @@ export default function Login() {
     const correctMailPass = users.find(
       (user) => user.email === emaill && user.password === passwordd
     );
-    const withoutProfile = users.find(
-      (user) =>
-        user.email === emaill &&
-        user.password === passwordd &&
-        user.gender === ""
-    );
 
+    const hasAccount = users.find(
+      (user) => user.email === emaill && user.password === passwordd &&
+      user.hasOwnProperty('gender') === true
+    );
+   
+    
     if (correctMailWrongPass) {
       setPasswordd("");
       setBorderColorEmail("border border-primary");
@@ -60,6 +60,12 @@ export default function Login() {
       setBorderColorEmail("border border-danger");
       setBorderColorPassword("border border-danger");
       setWarningEmail(true);
+    } else if (hasAccount) {
+      addLoggedInUser(correctMailPass);
+      console.log(correctMailPass);
+      setEmaill("");
+      setPasswordd("");
+      history.push("/home");
     } else {
       addLoggedInUser(correctMailPass);
       console.log(correctMailPass);
