@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import { Card, Button, ListGroup } from "react-bootstrap";
 
 import { useUsers } from "../../hooks/use-users";

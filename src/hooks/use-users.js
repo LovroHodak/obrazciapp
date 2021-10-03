@@ -39,7 +39,7 @@ export function UsersProvider(props) {
     setPersonalInfoOnce(user)
     console.log(users);
   };
-
+  console.log(users);
   const updateAllUsers = (oneUser) => {
     const updatedUsers = users.map((user) => {
       if (user.id === oneUser.id) {

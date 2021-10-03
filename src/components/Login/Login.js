@@ -41,6 +41,12 @@ export default function Login() {
     const correctMailPass = users.find(
       (user) => user.email === emaill && user.password === passwordd
     );
+    const withoutProfile = users.find(
+      (user) =>
+        user.email === emaill &&
+        user.password === passwordd &&
+        user.gender === ""
+    );
 
     if (correctMailWrongPass) {
       setPasswordd("");
